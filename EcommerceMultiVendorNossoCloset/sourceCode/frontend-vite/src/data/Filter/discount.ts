@@ -1,11 +1,11 @@
 export const discount=[
-    {"name": "10% and above", "value": 10},
-    {"name": "20% and above", "value": 20},
-    {"name": "30% and above", "value": 30},
-    {"name": "40% and above", "value": 40},
-    {"name": "50% and above", "value": 50},
-    {"name": "60% and above", "value": 60},
-    {"name": "70% and above", "value": 70},
-    {"name": "80% and above", "value": 80}
+    {"name": "10% e acima", "value": 10},
+    {"name": "20% e acima", "value": 20},
+    {"name": "30% e acima", "value": 30},
+    {"name": "40% e acima", "value": 40},
+    {"name": "50% e acima", "value": 50},
+    {"name": "60% e acima", "value": 60},
+    {"name": "70% e acima", "value": 70},
+    {"name": "80% e acima", "value": 80}
   ]
   

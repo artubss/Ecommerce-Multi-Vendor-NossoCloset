@@ -52,7 +52,7 @@ const BecomeSeller = () => {
 
           <img className="" src={"/seller.jpg"} alt="" />
           {/* <div>
-                <p className=" logo absolute p-6 rounded-t-full text-white text-center top-0 left-16 right-11 bg-teal-500">Zosh Bazaar</p>
+                <p className=" logo absolute p-6 rounded-t-full text-white text-center top-0 left-16 right-11 bg-teal-500">Nosso Closet</p>
             </div> */}
 
         </div>

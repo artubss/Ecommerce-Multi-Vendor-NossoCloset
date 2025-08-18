@@ -7,9 +7,9 @@ const Footer = () => {
         <div className="container mx-auto px-4">
           <div className="flex flex-wrap justify-between items-center">
             <div className="text-center md:text-left">
-              <h5 className="text-lg font-semibold">Zosh Bazzar</h5>
-              <p className="text-sm mt-2">
-                © {new Date().getFullYear()} Zosh Bazzar. All rights reserved.
+              <h5 className="text-lg font-semibold">Nosso Closet</h5>
+              <p className="text-sm text-gray-600">
+                © {new Date().getFullYear()} Nosso Closet. Todos os direitos reservados.
               </p>
             </div>
             <div className="text-center mt-4 md:mt-0">

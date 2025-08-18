@@ -50,9 +50,9 @@ const Home = () => {
                 <img className='w-full h-full' src={"/seller_banner_image.jpg"} alt="" />
                 <div className='absolute top-1/2 left-4 lg:left-[15rem] transform  -translate-y-1/2 font-semibold lg:text-4xl space-y-3 '>
                     <h1 className=''>
-                        Sell Your Product
+                        Compre com o melhor preço
                     </h1>
-                    <p className='text-lg md:text-2xl'>With <strong className='logo text-3xl md:text-5xl pl-2'>zosh bazzar</strong></p>
+                    <p className='text-lg md:text-2xl'>Com <strong className='logo text-3xl md:text-5xl pl-2'>Nosso Closet</strong></p>
 
                     <div className='pt-6 flex justify-center'>
                         <Button
@@ -60,7 +60,7 @@ const Home = () => {
                             startIcon={<StorefrontIcon />}
                             variant="contained"
                         >
-                            Become Seller
+                            Entre em nosso grupo no Whatsapp
                         </Button>
                     </div>
 
