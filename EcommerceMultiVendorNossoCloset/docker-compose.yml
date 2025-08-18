@@ -1,0 +1,101 @@
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: ecommerce_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ecommerce_multi_vendor
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d
+    networks:
+      - ecommerce_network
+
+  # Redis for caching and sessions
+  redis:
+    image: redis:7-alpine
+    container_name: ecommerce_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - ecommerce_network
+
+  # Backend Spring Boot
+  backend:
+    build:
+      context: ./sourceCode/backend-spring
+      dockerfile: Dockerfile
+    container_name: ecommerce_backend
+    restart: unless-stopped
+    ports:
+      - "5454:5454"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=ecommerce_multi_vendor
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - ecommerce_network
+    volumes:
+      - ./logs:/app/logs
+
+  # Frontend Vite React
+  frontend:
+    build:
+      context: ./sourceCode/frontend-vite
+      dockerfile: Dockerfile
+      platforms:
+        - linux/amd64
+    container_name: ecommerce_frontend
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:5454
+      - NODE_ENV=production
+    depends_on:
+      - backend
+    networks:
+      - ecommerce_network
+
+  # Nginx Reverse Proxy
+  nginx:
+    image: nginx:alpine
+    container_name: ecommerce_nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - ecommerce_network
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+
+networks:
+  ecommerce_network:
+    driver: bridge

@@ -1,0 +1,22 @@
+{
+  "titan.extension.excludedFromBuild": [
+    "\\eureka-server\\src\\main\\java\\com\\zosh\\eureka",
+    "\\eureka-server\\src\\main\\java\\com\\zosh",
+    "\\eureka-server\\src\\main\\java\\com",
+    "\\eureka-server\\src\\main\\java",
+    "\\eureka-server\\src\\main\\resources",
+    "\\eureka-server\\src\\main",
+    "\\eureka-server\\src",
+    "\\api-gateway\\src\\main\\java\\com\\zosh\\gateway",
+    "\\api-gateway\\src\\main\\java\\com\\zosh",
+    "\\api-gateway\\src\\main\\java\\com",
+    "\\api-gateway\\src\\main\\java",
+    "\\api-gateway\\src\\main\\resources",
+    "\\api-gateway\\src\\main",
+    "\\api-gateway\\src",
+    "\\microservices\\auth-service\\src\\main\\resources",
+    "\\microservices\\auth-service\\src\\main",
+    "\\microservices\\auth-service\\src",
+    "\\microservices\\auth-service"
+  ]
+}
