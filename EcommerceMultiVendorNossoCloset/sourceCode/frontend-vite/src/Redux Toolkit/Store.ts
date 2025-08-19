@@ -1,8 +1,9 @@
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import {
-  configureStore,
-  combineReducers,
-} from "@reduxjs/toolkit";
-import { useDispatch, useSelector, type TypedUseSelectorHook } from "react-redux";
+  useDispatch,
+  useSelector,
+  type TypedUseSelectorHook,
+} from "react-redux";
 
 // Customer slices
 import sellerSlice from "./Seller/sellerSlice";
@@ -25,6 +26,8 @@ import revenueChartSlice from "./Seller/revenueChartSlice";
 import CustomerSlice from "./Customer/Customer/CustomerSlice";
 import DealSlice from "./Admin/DealSlice";
 import AdminSlice from "./Admin/AdminSlice";
+import SupplierSlice from "./Admin/SupplierSlice";
+import CustomOrderSlice from "./Customer/CustomOrderSlice";
 
 const rootReducer = combineReducers({
   // customer
@@ -38,6 +41,7 @@ const rootReducer = combineReducers({
   wishlist: WishlistSlice,
   aiChatBot: AiChatBotSlice,
   homePage: CustomerSlice,
+  customOrders: CustomOrderSlice,
 
   // seller
   sellers: sellerSlice,
@@ -52,6 +56,7 @@ const rootReducer = combineReducers({
   adminCoupon: AdminCouponSlice,
   adminDeals: DealSlice,
   admin: AdminSlice,
+  suppliers: SupplierSlice,
 });
 
 const store = configureStore({

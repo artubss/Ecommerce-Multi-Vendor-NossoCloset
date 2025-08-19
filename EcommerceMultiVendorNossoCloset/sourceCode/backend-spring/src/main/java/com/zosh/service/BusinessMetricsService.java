@@ -255,4 +255,74 @@ public class BusinessMetricsService {
                 .register(meterRegistry)
                 .record(analysisTime);
     }
+
+    // ===== MÉTRICAS DE UPLOAD E STORAGE =====
+
+    /**
+     * Registrar upload de imagem para S3
+     */
+    public void recordImageUpload() {
+        Counter.builder("upload.image.s3")
+                .description("Uploads de imagens para S3")
+                .register(meterRegistry)
+                .increment();
+        log.debug("Métrica registrada: upload.image.s3");
+    }
+
+    /**
+     * Registrar upload de PDF para Google Drive
+     */
+    public void recordPdfUpload() {
+        Counter.builder("upload.pdf.drive")
+                .description("Uploads de PDFs para Google Drive")
+                .register(meterRegistry)
+                .increment();
+        log.debug("Métrica registrada: upload.pdf.drive");
+    }
+
+    /**
+     * Registrar upload de imagem de produto de catálogo
+     */
+    public void recordCatalogProductImageUpload() {
+        Counter.builder("upload.catalog.product.image")
+                .description("Uploads de imagens de produtos de catálogo")
+                .register(meterRegistry)
+                .increment();
+        log.debug("Métrica registrada: upload.catalog.product.image");
+    }
+
+    /**
+     * Registrar upload de imagem de pedido personalizado
+     */
+    public void recordCustomOrderImageUpload() {
+        Counter.builder("upload.custom.order.image")
+                .description("Uploads de imagens de pedidos personalizados")
+                .register(meterRegistry)
+                .increment();
+        log.debug("Métrica registrada: upload.custom.order.image");
+    }
+
+    /**
+     * Registrar upload de PDF de catálogo
+     */
+    public void recordCatalogPdfUpload() {
+        Counter.builder("upload.catalog.pdf")
+                .description("Uploads de PDFs de catálogos")
+                .register(meterRegistry)
+                .increment();
+        log.debug("Métrica registrada: upload.catalog.pdf");
+    }
+
+    /**
+     * Registrar erro de upload
+     */
+    public void recordUploadError(String type, String errorType) {
+        Counter.builder("upload.error")
+                .description("Erros de upload")
+                .tag("upload_type", type)
+                .tag("error_type", errorType)
+                .register(meterRegistry)
+                .increment();
+        log.warn("Erro de upload registrado: {} - {}", type, errorType);
+    }
 }
