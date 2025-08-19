@@ -1,9 +1,10 @@
-package com.nossocloset.repository;
+package com.zosh.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.nossocloset.model.PasswordResetToken;
+import com.zosh.model.PasswordResetToken;
 
 public interface PasswordResetTokenRepository extends JpaRepository<PasswordResetToken, Integer> {
-	PasswordResetToken findByToken(String token);
+
+    PasswordResetToken findByToken(String token);
 }

@@ -1,6 +1,7 @@
-package com.nossocloset.exception;
+package com.zosh.exception;
 
 public class CategoryNotFoundException extends Exception {
+
     public CategoryNotFoundException(String categoryNotFound) {
         super(categoryNotFound);
     }

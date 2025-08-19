@@ -1,4 +1,4 @@
-package com.nossocloset.response;
+package com.zosh.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class ApiResponse {
 
-	private String message;
-	private boolean status;
-
-
+    private String message;
+    private boolean status;
 
 }

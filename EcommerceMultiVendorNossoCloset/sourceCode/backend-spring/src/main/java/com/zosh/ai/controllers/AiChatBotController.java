@@ -1,10 +1,10 @@
-package com.nossocloset.ai.controllers;
+package com.zosh.ai.controllers;
 
-import com.nossocloset.ai.services.AiChatBotService;
-import com.nossocloset.model.User;
-import com.nossocloset.request.Prompt;
-import com.nossocloset.response.ApiResponse;
-import com.nossocloset.service.UserService;
+import com.zosh.ai.services.AiChatBotService;
+import com.zosh.model.User;
+import com.zosh.request.Prompt;
+import com.zosh.response.ApiResponse;
+import com.zosh.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,23 +24,23 @@ public class AiChatBotController {
             @RequestBody Prompt prompt,
             @RequestParam(required = false) Long userId,
             @RequestParam(required = false) Long productId,
-            @RequestHeader(required = false,name = "Authorization")String jwt) throws Exception {
+            @RequestHeader(required = false, name = "Authorization") String jwt) throws Exception {
 
         String message = prompt.getPrompt();
         if (productId != null) {
-            message = "the product id is " + productId +", " + message ;
+            message = "the product id is " + productId + ", " + message;
         }
 
-        User user=new User();
-        if(jwt!=null)
-            user=userService.findUserProfileByJwt(jwt);
+        User user = new User();
+        if (jwt != null) {
+            user = userService.findUserProfileByJwt(jwt);
+        }
 
 //        Long userId;
 //        if(user!=null){
 //            userId=user.getId();
 //        }
-
-        ApiResponse apiResponse = aiChatBotService.aiChatBot(message,productId,user.getId());
+        ApiResponse apiResponse = aiChatBotService.aiChatBot(message, productId, user.getId());
 
         return ResponseEntity.ok(apiResponse);
 

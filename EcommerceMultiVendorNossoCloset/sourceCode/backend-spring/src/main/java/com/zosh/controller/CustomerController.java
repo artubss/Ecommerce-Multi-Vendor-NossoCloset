@@ -1,9 +1,9 @@
-package com.nossocloset.controller;
+package com.zosh.controller;
 
-import com.nossocloset.model.Home;
-import com.nossocloset.model.HomeCategory;
-import com.nossocloset.service.HomeCategoryService;
-import com.nossocloset.service.HomeService;
+import com.zosh.model.Home;
+import com.zosh.model.HomeCategory;
+import com.zosh.service.HomeCategoryService;
+import com.zosh.service.HomeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class CustomerController {
+
     private final HomeCategoryService homeCategoryService;
     private final HomeService homeService;
 
@@ -32,7 +33,7 @@ public class CustomerController {
             @RequestBody List<HomeCategory> homeCategories
     ) {
         List<HomeCategory> categories = homeCategoryService.createCategories(homeCategories);
-        Home home=homeService.creatHomePageData(categories);
+        Home home = homeService.creatHomePageData(categories);
         return new ResponseEntity<>(home, HttpStatus.ACCEPTED);
     }
 }

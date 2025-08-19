@@ -1,18 +1,18 @@
-package com.nossocloset.ai.services;
+package com.zosh.ai.services;
 
-import com.nossocloset.exception.ProductException;
-import com.nossocloset.mapper.OrderMapper;
-import com.nossocloset.mapper.ProductMapper;
-import com.nossocloset.model.Cart;
-import com.nossocloset.model.Order;
-import com.nossocloset.model.Product;
-import com.nossocloset.model.User;
-import com.nossocloset.repository.CartRepository;
-import com.nossocloset.repository.OrderRepository;
-import com.nossocloset.repository.ProductRepository;
-import com.nossocloset.repository.UserRepository;
-import com.nossocloset.response.ApiResponse;
-import com.nossocloset.response.FunctionResponse;
+import com.zosh.exception.ProductException;
+import com.zosh.mapper.OrderMapper;
+import com.zosh.mapper.ProductMapper;
+import com.zosh.model.Cart;
+import com.zosh.model.Order;
+import com.zosh.model.Product;
+import com.zosh.model.User;
+import com.zosh.repository.CartRepository;
+import com.zosh.repository.OrderRepository;
+import com.zosh.repository.ProductRepository;
+import com.zosh.repository.UserRepository;
+import com.zosh.response.ApiResponse;
+import com.zosh.response.FunctionResponse;
 import lombok.RequiredArgsConstructor;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -29,7 +29,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AiChatBotServiceImpl implements AiChatBotService {
 
-
     String GEMINI_API_KEY = "AIzaSyDp-jeRRqqbr08scpIn1p9rLEL_Nqv5Zuo";
 
     private final CartRepository cartRepository;
@@ -38,7 +37,6 @@ public class AiChatBotServiceImpl implements AiChatBotService {
 
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
-
 
     private JSONArray createFunctionDeclarations() {
         return new JSONArray()
@@ -92,17 +90,16 @@ public class AiChatBotServiceImpl implements AiChatBotService {
                 );
     }
 
-
     private FunctionResponse processFunctionCall(JSONObject functionCall,
-                                                 Long productId,
-                                                 Long userId
+            Long productId,
+            Long userId
     ) throws ProductException {
         String functionName = functionCall.getString("name");
         JSONObject args = functionCall.getJSONObject("args");
 
         FunctionResponse res = new FunctionResponse();
         res.setFunctionName(functionName);
-        User user=userRepository.findById(userId).orElse(null);
+        User user = userRepository.findById(userId).orElse(null);
 
         switch (functionName) {
             case "getUserCart":
@@ -114,8 +111,8 @@ public class AiChatBotServiceImpl implements AiChatBotService {
             case "getUsersOrder":
 //                Long orderId = Long.parseLong(args.getString("orderId"));
                 List<Order> orders = orderRepository.findByUserId(userId);
-                res.setOrderHistory(OrderMapper.toOrderHistory(orders,user));
-                System.out.println("order history: " + OrderMapper.toOrderHistory(orders,user));
+                res.setOrderHistory(OrderMapper.toOrderHistory(orders, user));
+                System.out.println("order history: " + OrderMapper.toOrderHistory(orders, user));
                 break;
             case "getProductDetails":
 //                Long productId = Long.parseLong(args.getString("productId"));
@@ -130,7 +127,6 @@ public class AiChatBotServiceImpl implements AiChatBotService {
         }
         return res;
     }
-
 
     public FunctionResponse getFunctionResponse(String prompt, Long productId, Long userId) throws ProductException {
         String GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=" + GEMINI_API_KEY;
@@ -149,7 +145,6 @@ public class AiChatBotServiceImpl implements AiChatBotService {
                                 .put("functionDeclarations", createFunctionDeclarations())
                         )
                 );
-
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(org.springframework.http.MediaType.APPLICATION_JSON);
@@ -172,7 +167,6 @@ public class AiChatBotServiceImpl implements AiChatBotService {
 
         return processFunctionCall(functionCall, productId, userId);
     }
-
 
     @Override
     public ApiResponse aiChatBot(String prompt, Long productId, Long userId) throws ProductException {
@@ -204,9 +198,9 @@ public class AiChatBotServiceImpl implements AiChatBotService {
                                                 .put("functionCall", new JSONObject()
                                                         .put("name", functionResponse.getFunctionName())
                                                         .put("args", new JSONObject()
-                                                                .put("cart", functionResponse.getUserCart()!=null?functionResponse.getUserCart().getUser():null)
-                                                                .put("order",  functionResponse.getOrderHistory()!=null? functionResponse.getOrderHistory() :null )
-                                                                .put("product", functionResponse.getProduct()!=null?ProductMapper.toProductDto(functionResponse.getProduct()):null)
+                                                                .put("cart", functionResponse.getUserCart() != null ? functionResponse.getUserCart().getUser() : null)
+                                                                .put("order", functionResponse.getOrderHistory() != null ? functionResponse.getOrderHistory() : null)
+                                                                .put("product", functionResponse.getProduct() != null ? ProductMapper.toProductDto(functionResponse.getProduct()) : null)
                                                         )
                                                 )
                                         )

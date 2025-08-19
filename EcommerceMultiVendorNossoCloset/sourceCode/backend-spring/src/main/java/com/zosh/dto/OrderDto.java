@@ -1,9 +1,9 @@
-package com.nossocloset.dto;
+package com.zosh.dto;
 
-import com.nossocloset.domain.OrderStatus;
-import com.nossocloset.domain.PaymentStatus;
-import com.nossocloset.model.Address;
-import com.nossocloset.model.PaymentDetails;
+import com.zosh.domain.OrderStatus;
+import com.zosh.domain.PaymentStatus;
+import com.zosh.model.Address;
+import com.zosh.model.PaymentDetails;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -26,7 +26,7 @@ public class OrderDto {
 
     private Address shippingAddress;
 
-    private PaymentDetails paymentDetails=new PaymentDetails();
+    private PaymentDetails paymentDetails = new PaymentDetails();
 
     private double totalMrpPrice;
 
@@ -38,7 +38,7 @@ public class OrderDto {
 
     private int totalItem;
 
-    private PaymentStatus paymentStatus=PaymentStatus.PENDING;
+    private PaymentStatus paymentStatus = PaymentStatus.PENDING;
 
     private LocalDateTime orderDate = LocalDateTime.now();
     private LocalDateTime deliverDate = orderDate.plusDays(7);

@@ -1,10 +1,10 @@
-package com.nossocloset.service.impl;
+package com.zosh.service.impl;
 
-import com.nossocloset.model.Deal;
-import com.nossocloset.model.HomeCategory;
-import com.nossocloset.repository.DealRepository;
-import com.nossocloset.repository.HomeCategoryRepository;
-import com.nossocloset.service.DealService;
+import com.zosh.model.Deal;
+import com.zosh.model.HomeCategory;
+import com.zosh.repository.DealRepository;
+import com.zosh.repository.HomeCategoryRepository;
+import com.zosh.service.DealService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class DealServiceImpl implements DealService {
+
     private final DealRepository dealRepository;
     private final HomeCategoryRepository homeCategoryRepository;
 
@@ -35,22 +36,21 @@ public class DealServiceImpl implements DealService {
 //
 //    }
 
-
     @Override
     public List<Deal> getDeals() {
         return dealRepository.findAll();
     }
 
     @Override
-    public Deal updateDeal(Deal deal,Long id) throws Exception {
+    public Deal updateDeal(Deal deal, Long id) throws Exception {
         Deal existingDeal = dealRepository.findById(id).orElse(null);
-        HomeCategory category=homeCategoryRepository.findById(deal.getCategory().getId()).orElse(null);
+        HomeCategory category = homeCategoryRepository.findById(deal.getCategory().getId()).orElse(null);
 
-        if(existingDeal!=null){
-            if(deal.getDiscount()!=null){
+        if (existingDeal != null) {
+            if (deal.getDiscount() != null) {
                 existingDeal.setDiscount(deal.getDiscount());
             }
-            if(category!=null){
+            if (category != null) {
                 existingDeal.setCategory(category);
             }
             return dealRepository.save(existingDeal);
@@ -68,6 +68,5 @@ public class DealServiceImpl implements DealService {
         }
 
     }
-
 
 }

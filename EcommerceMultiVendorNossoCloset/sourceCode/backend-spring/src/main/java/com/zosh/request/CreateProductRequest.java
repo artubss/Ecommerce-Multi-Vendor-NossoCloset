@@ -1,7 +1,6 @@
-package com.nossocloset.request;
+package com.zosh.request;
 
 import java.util.List;
-
 
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreateProductRequest {
-	
+
     private String title;
 
     @Column(length = 2000)
@@ -34,5 +33,5 @@ public class CreateProductRequest {
     private String category3;
 
     private String sizes;
-    
+
 }

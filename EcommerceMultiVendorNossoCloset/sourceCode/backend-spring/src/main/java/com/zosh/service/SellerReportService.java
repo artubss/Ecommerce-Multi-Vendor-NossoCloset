@@ -1,10 +1,12 @@
-package com.nossocloset.service;
+package com.zosh.service;
 
-import com.nossocloset.model.Seller;
-import com.nossocloset.model.SellerReport;
+import com.zosh.model.Seller;
+import com.zosh.model.SellerReport;
 
 public interface SellerReportService {
+
     SellerReport getSellerReport(Seller seller);
-    SellerReport updateSellerReport( SellerReport sellerReport);
+
+    SellerReport updateSellerReport(SellerReport sellerReport);
 
 }

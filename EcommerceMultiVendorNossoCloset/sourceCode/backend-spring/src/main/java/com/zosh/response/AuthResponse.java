@@ -1,6 +1,6 @@
-package com.nossocloset.response;
+package com.zosh.response;
 
-import com.nossocloset.domain.USER_ROLE;
+import com.zosh.domain.USER_ROLE;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,12 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthResponse {
-	
-	private String jwt;
-	
-	private boolean status;
-	
-	private String message;
 
-	private USER_ROLE role;
+    private String jwt;
+
+    private boolean status;
+
+    private String message;
+
+    private USER_ROLE role;
 }

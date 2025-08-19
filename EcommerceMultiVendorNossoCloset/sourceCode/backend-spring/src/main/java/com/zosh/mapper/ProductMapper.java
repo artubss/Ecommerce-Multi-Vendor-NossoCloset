@@ -1,7 +1,7 @@
-package com.nossocloset.mapper;
+package com.zosh.mapper;
 
-import com.nossocloset.dto.ProductDto;
-import com.nossocloset.model.Product;
+import com.zosh.dto.ProductDto;
+import com.zosh.model.Product;
 
 public class ProductMapper {
 
@@ -22,6 +22,7 @@ public class ProductMapper {
 
         return productDto;
     }
+
     public Product mapToEntity(ProductDto productDto) {
         return null;
     }

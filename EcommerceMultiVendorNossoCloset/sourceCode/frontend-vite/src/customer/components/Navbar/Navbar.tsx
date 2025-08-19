@@ -22,7 +22,6 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useAppDispatch, useAppSelector } from "../../../Redux Toolkit/Store";
 import { FavoriteBorder } from "@mui/icons-material";
 
-
 const Navbar = () => {
   const [showSheet, setShowSheet] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState("men");
@@ -31,7 +30,6 @@ const Navbar = () => {
   const dispatch = useAppDispatch();
   const { user, auth, cart, sellers } = useAppSelector((store) => store);
   const navigate = useNavigate();
-  
 
   const [open, setOpen] = React.useState(false);
 
@@ -39,15 +37,11 @@ const Navbar = () => {
     setOpen(newOpen);
   };
 
-
-
   const becomeSellerClick = () => {
     if (sellers.profile?.id) {
-      navigate("/seller")
-    } else navigate("/become-seller")
-  }
-
- 
+      navigate("/seller");
+    } else navigate("/become-seller");
+  };
 
   return (
     <Box
@@ -95,7 +89,7 @@ const Navbar = () => {
         </div>
 
         <div className="flex gap-1 lg:gap-6 items-center">
-          <IconButton onClick={()=>navigate("/search-products")}>
+          <IconButton onClick={() => navigate("/search-products")}>
             <SearchIcon className="text-gray-700" sx={{ fontSize: 29 }} />
           </IconButton>
 
@@ -123,9 +117,8 @@ const Navbar = () => {
             </Button>
           )}
 
-          <IconButton onClick={()=>navigate("/wishlist")}>
-            <FavoriteBorder sx={{ fontSize: 29 }}
-                className="text-gray-700" />
+          <IconButton onClick={() => navigate("/wishlist")}>
+            <FavoriteBorder sx={{ fontSize: 29 }} className="text-gray-700" />
           </IconButton>
 
           <IconButton onClick={() => navigate("/cart")}>

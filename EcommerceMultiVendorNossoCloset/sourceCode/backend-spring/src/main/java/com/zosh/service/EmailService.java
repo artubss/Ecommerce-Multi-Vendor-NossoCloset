@@ -1,4 +1,4 @@
-package com.nossocloset.service;
+package com.zosh.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -15,17 +15,14 @@ public class EmailService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-
     public void sendVerificationOtpEmail(String userEmail, String otp, String subject, String text) throws MessagingException, MailSendException {
-
 
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, "utf-8");
 
-
             helper.setSubject(subject);
-            helper.setText(text+otp, true);
+            helper.setText(text + otp, true);
             helper.setTo(userEmail);
             javaMailSender.send(mimeMessage);
         } catch (MailException e) {

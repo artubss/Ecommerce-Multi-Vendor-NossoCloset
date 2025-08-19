@@ -1,12 +1,9 @@
-package com.nossocloset.service;
+package com.zosh.service;
 
-
-import com.nossocloset.model.OrderItem;
+import com.zosh.model.OrderItem;
 
 public interface OrderItemService {
 
-	OrderItem getOrderItemById(Long id) throws Exception;
-	
-
+    OrderItem getOrderItemById(Long id) throws Exception;
 
 }

@@ -1,4 +1,4 @@
-package com.nossocloset.model;
+package com.zosh.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

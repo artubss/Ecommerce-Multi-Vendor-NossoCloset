@@ -1,10 +1,10 @@
-package com.nossocloset.repository;
+package com.zosh.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.nossocloset.model.Cart;
+import com.zosh.model.Cart;
 
 public interface CartRepository extends JpaRepository<Cart, Long> {
 
-	 Cart findByUserId(Long userId);
+    Cart findByUserId(Long userId);
 }

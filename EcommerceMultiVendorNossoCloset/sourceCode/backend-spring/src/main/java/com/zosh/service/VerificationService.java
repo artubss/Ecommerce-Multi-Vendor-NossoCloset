@@ -1,6 +1,6 @@
-package com.nossocloset.service;
+package com.zosh.service;
 
-import com.nossocloset.model.VerificationCode;
+import com.zosh.model.VerificationCode;
 
 public interface VerificationService {
 

@@ -1,9 +1,9 @@
-package com.nossocloset.service.impl;
+package com.zosh.service.impl;
 
-import com.nossocloset.dto.RevenueChart;
-import com.nossocloset.model.Order;
-import com.nossocloset.repository.OrderRepository;
-import com.nossocloset.service.RevenueService;
+import com.zosh.dto.RevenueChart;
+import com.zosh.model.Order;
+import com.zosh.repository.OrderRepository;
+import com.zosh.service.RevenueService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,19 +19,19 @@ public class RevenueServiceImpl implements RevenueService {
     private final OrderRepository orderRepository;
 
     // Get daily revenue data for the past X days
-    public List<RevenueChart> getDailyRevenueForChart(int days,Long sellerId) {
+    public List<RevenueChart> getDailyRevenueForChart(int days, Long sellerId) {
         List<RevenueChart> revenueData = new ArrayList<>();
         LocalDate currentDate = LocalDate.now();
 
         for (int i = days - 1; i >= 0; i--) {
             LocalDate date = currentDate.minusDays(i);
             double dailyRevenue = orderRepository
-                    .findBySellerIdAndOrderDateBetween(sellerId,date.atStartOfDay(), date.plusDays(1).atStartOfDay())
+                    .findBySellerIdAndOrderDateBetween(sellerId, date.atStartOfDay(), date.plusDays(1).atStartOfDay())
                     .stream()
                     .mapToDouble(Order::getTotalSellingPrice)
                     .sum();
 
-            RevenueChart revenueChart=new RevenueChart();
+            RevenueChart revenueChart = new RevenueChart();
             revenueChart.setRevenue(dailyRevenue);
             revenueChart.setDate(date.toString());
 
@@ -42,7 +42,7 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     // Get monthly revenue data for the past X months
-    public List<RevenueChart> getMonthlyRevenueForChart(int months,Long sellerId) {
+    public List<RevenueChart> getMonthlyRevenueForChart(int months, Long sellerId) {
         List<RevenueChart> revenueData = new ArrayList<>();
         LocalDate currentDate = LocalDate.now();
 
@@ -52,14 +52,14 @@ public class RevenueServiceImpl implements RevenueService {
             LocalDate startOfNextMonth = startOfMonth.plusMonths(1);
 
             double monthlyRevenue = orderRepository
-                    .findBySellerIdAndOrderDateBetween(sellerId,startOfMonth.atStartOfDay(), startOfNextMonth.atStartOfDay())
+                    .findBySellerIdAndOrderDateBetween(sellerId, startOfMonth.atStartOfDay(), startOfNextMonth.atStartOfDay())
                     .stream()
                     .mapToDouble(Order::getTotalSellingPrice)
                     .sum();
 
-            RevenueChart revenueChart=new RevenueChart();
+            RevenueChart revenueChart = new RevenueChart();
             revenueChart.setRevenue(monthlyRevenue);
-            revenueChart.setDate( date.getYear() + "-" + String.format("%02d", date.getMonthValue()));
+            revenueChart.setDate(date.getYear() + "-" + String.format("%02d", date.getMonthValue()));
 
             revenueData.add(revenueChart);
         }
@@ -68,7 +68,7 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     // Get yearly revenue data for the past X years
-    public List<RevenueChart> getYearlyRevenueForChart(int years,Long sellerId) {
+    public List<RevenueChart> getYearlyRevenueForChart(int years, Long sellerId) {
         List<RevenueChart> revenueData = new ArrayList<>();
         LocalDate currentDate = LocalDate.now();
 
@@ -77,12 +77,12 @@ public class RevenueServiceImpl implements RevenueService {
             LocalDate startOfNextYear = startOfYear.plusYears(1);
 
             double yearlyRevenue = orderRepository
-                    .findBySellerIdAndOrderDateBetween(sellerId,startOfYear.atStartOfDay(), startOfNextYear.atStartOfDay())
+                    .findBySellerIdAndOrderDateBetween(sellerId, startOfYear.atStartOfDay(), startOfNextYear.atStartOfDay())
                     .stream()
                     .mapToDouble(Order::getTotalSellingPrice)
                     .sum();
 
-            RevenueChart revenueChart=new RevenueChart();
+            RevenueChart revenueChart = new RevenueChart();
             revenueChart.setRevenue(yearlyRevenue);
             revenueChart.setDate(String.valueOf(startOfYear.getYear()));
             revenueData.add(revenueChart);
@@ -126,14 +126,14 @@ public class RevenueServiceImpl implements RevenueService {
     }
 
     @Override
-    public List<RevenueChart> getRevenueChartByType(String type,Long sellerId) {
-        if(type.equals("monthly")){
-            return this.getMonthlyRevenueForChart(12,sellerId);
+    public List<RevenueChart> getRevenueChartByType(String type, Long sellerId) {
+        if (type.equals("monthly")) {
+            return this.getMonthlyRevenueForChart(12, sellerId);
+        } else if (type.equals("daily")) {
+            return this.getDailyRevenueForChart(30, sellerId);
+        } else {
+            return this.getHourlyRevenueForChart(sellerId);
         }
-        else if(type.equals("daily")){
-            return this.getDailyRevenueForChart(30,sellerId);
-        }
-        else return this.getHourlyRevenueForChart(sellerId);
     }
 
 }

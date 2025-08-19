@@ -1,4 +1,4 @@
-package com.nossocloset.model;
+package com.zosh.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
-
 
 @Getter
 @Setter

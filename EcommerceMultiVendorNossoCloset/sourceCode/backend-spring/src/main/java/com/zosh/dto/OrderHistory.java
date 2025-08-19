@@ -1,4 +1,4 @@
-package com.nossocloset.dto;
+package com.zosh.dto;
 
 import lombok.Data;
 
@@ -6,6 +6,7 @@ import java.util.List;
 
 @Data
 public class OrderHistory {
+
     private Long id;
     private UserDto user;
     private List<OrderDto> currentOrders;

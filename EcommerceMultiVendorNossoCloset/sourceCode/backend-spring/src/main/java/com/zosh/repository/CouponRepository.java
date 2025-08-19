@@ -1,8 +1,9 @@
-package com.nossocloset.repository;
+package com.zosh.repository;
 
-import com.nossocloset.model.Coupon;
+import com.zosh.model.Coupon;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CouponRepository extends JpaRepository<Coupon,Long> {
+public interface CouponRepository extends JpaRepository<Coupon, Long> {
+
     Coupon findByCode(String couponCode);
 }

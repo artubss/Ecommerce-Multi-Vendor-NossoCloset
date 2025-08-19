@@ -1,4 +1,4 @@
-package com.nossocloset.model;
+package com.zosh.model;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,7 +19,7 @@ import lombok.*;
 
 public class Product {
 
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
@@ -38,7 +38,7 @@ public class Product {
     private String color;
 
     @ElementCollection
-    private List<String> images =new ArrayList<>();
+    private List<String> images = new ArrayList<>();
 
     private int numRatings;
 
@@ -47,14 +47,14 @@ public class Product {
 
     @ManyToOne
     private Seller seller;
-    
+
     private LocalDateTime createdAt;
 
 //    @ElementCollection
     private String Sizes;
 
-    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Review> reviews = new ArrayList<>();
 
-   private boolean in_stock = true;
+    private boolean in_stock = true;
 }

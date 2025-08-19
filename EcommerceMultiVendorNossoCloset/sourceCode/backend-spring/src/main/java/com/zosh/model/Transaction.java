@@ -1,4 +1,4 @@
-package com.nossocloset.model;
+package com.zosh.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@Table(name = "app_transactions") // Renomeando para evitar conflito com palavra reservada 'transaction'
 public class Transaction {
 
     @Id
@@ -28,5 +29,5 @@ public class Transaction {
     @ManyToOne
     private Seller seller;
 
-    private LocalDateTime date= LocalDateTime.now();
+    private LocalDateTime date = LocalDateTime.now();
 }

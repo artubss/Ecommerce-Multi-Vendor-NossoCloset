@@ -1,4 +1,4 @@
-package com.nossocloset.model;
+package com.zosh.model;
 
 import java.util.Date;
 
@@ -15,22 +15,20 @@ import lombok.Data;
 @Entity
 @Data
 public class Notification {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @ManyToOne
     @JoinColumn(name = "recipient_id")
     private User customer;
 
-    
     private String message;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date sentAt;
-    
-    private boolean readStatus;
-    
-    
-}
 
+    private boolean readStatus;
+
+}

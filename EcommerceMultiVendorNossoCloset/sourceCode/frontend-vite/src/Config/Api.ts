@@ -1,12 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
 
 export const API_URL = "http://localhost:5454";
-export const DEPLOYED_URL = "https://zosh-bazzar-backend.onrender.com"
-// change api
+export const DEPLOYED_URL = "https://nosso-closet-backend.onrender.com";
+// API do Nosso Closet
 
 export const api = axios.create({
-  baseURL: API_URL, 
+  baseURL: API_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });

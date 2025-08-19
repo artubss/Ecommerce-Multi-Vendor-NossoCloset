@@ -1,4 +1,4 @@
-package com.nossocloset.ai.services;
+package com.zosh.ai.services;
 
 public interface AiProductService {
 

@@ -1,13 +1,13 @@
-package com.nossocloset.controller;
+package com.zosh.controller;
 
-import com.nossocloset.domain.OrderStatus;
-import com.nossocloset.exception.OrderException;
-import com.nossocloset.exception.SellerException;
-import com.nossocloset.model.Order;
-import com.nossocloset.model.Seller;
-import com.nossocloset.response.ApiResponse;
-import com.nossocloset.service.OrderService;
-import com.nossocloset.service.SellerService;
+import com.zosh.domain.OrderStatus;
+import com.zosh.exception.OrderException;
+import com.zosh.exception.SellerException;
+import com.zosh.model.Order;
+import com.zosh.model.Seller;
+import com.zosh.response.ApiResponse;
+import com.zosh.service.OrderService;
+import com.zosh.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +25,8 @@ public class SellerOrderController {
 
     @Autowired
     public SellerOrderController(OrderService orderService,
-
-                                 SellerService sellerService) {
-        this.orderService=orderService;
-
+            SellerService sellerService) {
+        this.orderService = orderService;
 
         this.sellerService = sellerService;
     }
@@ -37,8 +35,8 @@ public class SellerOrderController {
     public ResponseEntity<List<Order>> getAllOrdersHandler(
             @RequestHeader("Authorization") String jwt
     ) throws SellerException {
-        Seller seller=sellerService.getSellerProfile(jwt);
-        List<Order> orders=orderService.getShopsOrders(seller.getId());
+        Seller seller = sellerService.getSellerProfile(jwt);
+        List<Order> orders = orderService.getShopsOrders(seller.getId());
 
         return new ResponseEntity<>(orders, HttpStatus.ACCEPTED);
     }
@@ -50,19 +48,18 @@ public class SellerOrderController {
             @PathVariable OrderStatus orderStatus
     ) throws OrderException {
 
-        Order orders=orderService.updateOrderStatus(orderId,orderStatus);
+        Order orders = orderService.updateOrderStatus(orderId, orderStatus);
 
-        return new ResponseEntity<>(orders,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(orders, HttpStatus.ACCEPTED);
     }
-
 
     @DeleteMapping("/{orderId}/delete")
     public ResponseEntity<ApiResponse> deleteOrderHandler(@PathVariable Long orderId,
-                                                          @RequestHeader("Authorization") String jwt) throws OrderException{
+            @RequestHeader("Authorization") String jwt) throws OrderException {
         orderService.deleteOrder(orderId);
-        ApiResponse res=new ApiResponse("Order Deleted Successfully",true);
+        ApiResponse res = new ApiResponse("Order Deleted Successfully", true);
         System.out.println("delete method working....");
-        return new ResponseEntity<>(res,HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(res, HttpStatus.ACCEPTED);
     }
 
 }

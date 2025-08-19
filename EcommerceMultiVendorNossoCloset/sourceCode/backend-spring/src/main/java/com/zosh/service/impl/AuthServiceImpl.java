@@ -1,22 +1,22 @@
-package com.nossocloset.service.impl;
+package com.zosh.service.impl;
 
-import com.nossocloset.config.JwtProvider;
-import com.nossocloset.domain.USER_ROLE;
-import com.nossocloset.exception.SellerException;
-import com.nossocloset.exception.UserException;
-import com.nossocloset.model.Cart;
-import com.nossocloset.model.User;
-import com.nossocloset.model.VerificationCode;
-import com.nossocloset.repository.CartRepository;
-import com.nossocloset.repository.UserRepository;
-import com.nossocloset.repository.VerificationCodeRepository;
-import com.nossocloset.request.LoginRequest;
-import com.nossocloset.request.SignupRequest;
-import com.nossocloset.response.AuthResponse;
-import com.nossocloset.service.AuthService;
-import com.nossocloset.service.EmailService;
-import com.nossocloset.service.UserService;
-import com.nossocloset.utils.OtpUtils;
+import com.zosh.config.JwtProvider;
+import com.zosh.domain.USER_ROLE;
+import com.zosh.exception.SellerException;
+import com.zosh.exception.UserException;
+import com.zosh.model.Cart;
+import com.zosh.model.User;
+import com.zosh.model.VerificationCode;
+import com.zosh.repository.CartRepository;
+import com.zosh.repository.UserRepository;
+import com.zosh.repository.VerificationCodeRepository;
+import com.zosh.request.LoginRequest;
+import com.zosh.request.SignupRequest;
+import com.zosh.response.AuthResponse;
+import com.zosh.service.AuthService;
+import com.zosh.service.EmailService;
+import com.zosh.service.UserService;
+import com.zosh.utils.OtpUtils;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -48,10 +48,8 @@ public class AuthServiceImpl implements AuthService {
     private final CustomeUserServiceImplementation customUserDetails;
     private final CartRepository cartRepository;
 
-
     @Override
     public void sentLoginOtp(String email) throws UserException, MessagingException {
-
 
         String SIGNING_PREFIX = "signing_";
 
@@ -74,7 +72,7 @@ public class AuthServiceImpl implements AuthService {
         verificationCode.setEmail(email);
         verificationCodeRepository.save(verificationCode);
 
-        String subject = "Zosh Bazaar Login/Signup Otp";
+        String subject = "Nosso Closet Login/Signup Otp";
         String text = "your login otp is - ";
         emailService.sendVerificationOtpEmail(email, otp, subject, text);
     }
@@ -114,12 +112,10 @@ public class AuthServiceImpl implements AuthService {
             cartRepository.save(cart);
         }
 
-
         List<GrantedAuthority> authorities = new ArrayList<>();
 
         authorities.add(new SimpleGrantedAuthority(
                 USER_ROLE.ROLE_CUSTOMER.toString()));
-
 
         Authentication authentication = new UsernamePasswordAuthenticationToken(
                 email, null, authorities);
@@ -132,11 +128,24 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponse signin(LoginRequest req) throws SellerException {
 
         String username = req.getEmail();
+        String password = req.getPassword();
         String otp = req.getOtp();
 
-        System.out.println(username + " ----- " + otp);
+        System.out.println(username + " ----- " + otp + " ----- " + password);
 
-        Authentication authentication = authenticate(username, otp);
+        Authentication authentication;
+
+        // Se tiver senha, tenta login com senha
+        if (password != null && !password.trim().isEmpty()) {
+            authentication = authenticateWithPassword(username, password);
+        } // Se tiver OTP, tenta login com OTP
+        else if (otp != null && !otp.trim().isEmpty()) {
+            authentication = authenticateWithOtp(username, otp);
+        } // Se não tiver nenhum, retorna erro
+        else {
+            throw new SellerException("Senha ou OTP é obrigatório");
+        }
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
         String token = jwtProvider.generateToken(authentication);
@@ -146,9 +155,7 @@ public class AuthServiceImpl implements AuthService {
         authResponse.setJwt(token);
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-
         String roleName = authorities.isEmpty() ? null : authorities.iterator().next().getAuthority();
-
 
         authResponse.setRole(USER_ROLE.valueOf(roleName));
 
@@ -156,22 +163,44 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
-
-
-    private Authentication authenticate(String username, String otp) throws SellerException {
+    private Authentication authenticateWithPassword(String username, String password) throws SellerException {
         UserDetails userDetails = customUserDetails.loadUserByUsername(username);
 
-        System.out.println("sign in userDetails - " + userDetails);
+        System.out.println("sign in with password - userDetails - " + userDetails);
 
         if (userDetails == null) {
-            System.out.println("sign in userDetails - null ");
-            throw new BadCredentialsException("Invalid username or password");
+            System.out.println("sign in with password - userDetails - null ");
+            throw new BadCredentialsException("Email ou senha inválidos");
         }
+
+        // Verifica se a senha está correta
+        if (!passwordEncoder.matches(password, userDetails.getPassword())) {
+            throw new BadCredentialsException("Email ou senha inválidos");
+        }
+
+        return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    }
+
+    private Authentication authenticateWithOtp(String username, String otp) throws SellerException {
+        UserDetails userDetails = customUserDetails.loadUserByUsername(username);
+
+        System.out.println("sign in with otp - userDetails - " + userDetails);
+
+        if (userDetails == null) {
+            System.out.println("sign in with otp - userDetails - null ");
+            throw new BadCredentialsException("Email ou OTP inválidos");
+        }
+
         VerificationCode verificationCode = verificationCodeRepository.findByEmail(username);
 
         if (verificationCode == null || !verificationCode.getOtp().equals(otp)) {
-            throw new SellerException("wrong otp...");
+            throw new SellerException("OTP incorreto ou expirado");
         }
+
         return new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+    }
+
+    private Authentication authenticate(String username, String otp) throws SellerException {
+        return authenticateWithOtp(username, otp);
     }
 }

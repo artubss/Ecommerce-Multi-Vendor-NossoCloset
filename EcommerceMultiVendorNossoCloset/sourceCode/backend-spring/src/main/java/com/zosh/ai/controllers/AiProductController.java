@@ -1,7 +1,7 @@
-package com.nossocloset.ai.controllers;
+package com.zosh.ai.controllers;
 
-import com.nossocloset.ai.services.AiProductService;
-import com.nossocloset.response.ApiResponse;
+import com.zosh.ai.services.AiProductService;
+import com.zosh.response.ApiResponse;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/ai")
 public class AiProductController {
-    
+
     private final AiProductService productService;
 
     public AiProductController(AiProductService productService) {

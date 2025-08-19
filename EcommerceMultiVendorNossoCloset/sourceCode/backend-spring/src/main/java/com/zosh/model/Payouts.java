@@ -1,6 +1,6 @@
-package com.nossocloset.model;
+package com.zosh.model;
 
-import com.nossocloset.domain.PayoutsStatus;
+import com.zosh.domain.PayoutsStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,7 +30,8 @@ public class Payouts {
 
     private Long amount;
 
+    @Column(columnDefinition = "SMALLINT")
     private PayoutsStatus status = PayoutsStatus.PENDING;
 
-    private LocalDateTime data=LocalDateTime.now();
+    private LocalDateTime data = LocalDateTime.now();
 }

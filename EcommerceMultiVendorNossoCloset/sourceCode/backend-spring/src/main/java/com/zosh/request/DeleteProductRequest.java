@@ -1,7 +1,6 @@
-package com.nossocloset.request;
+package com.zosh.request;
 
 public class DeleteProductRequest {
-	
-//	private Long 
 
+//	private Long 
 }

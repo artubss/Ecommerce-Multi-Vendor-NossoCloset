@@ -1,5 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  type PayloadAction,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 import { api } from "../../Config/Api";
 import type { Seller, SellerReport } from "../../types/sellerTypes";
@@ -24,7 +28,7 @@ const initialState: SellerState = {
   error: null,
   profile: null,
   report: null,
-  profileUpdated:false,
+  profileUpdated: false,
 };
 
 // Define the base URL for the API
@@ -150,17 +154,12 @@ export const fetchSellerById = createAsyncThunk<Seller, number>(
   }
 );
 
-export const updateSeller = createAsyncThunk<
-  Seller, any 
->(
+export const updateSeller = createAsyncThunk<Seller, any>(
   "sellers/updateSeller",
-  async (
-      seller : any,
-    { rejectWithValue }
-  ) => {
-    console.log("seller update request ",seller)
+  async (seller: any, { rejectWithValue }) => {
+    console.log("seller update request ", seller);
     try {
-      const response = await api.patch(`${API_URL}`, seller,{
+      const response = await api.patch(`${API_URL}`, seller, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("jwt")}`,
         },
@@ -169,10 +168,7 @@ export const updateSeller = createAsyncThunk<
       return response.data;
     } catch (error: any) {
       if (axios.isAxiosError(error) && error.response) {
-        console.error(
-          "Update seller error response data:",
-          error.response
-        );
+        console.error("Update seller error response data:", error.response);
         return rejectWithValue(error.message);
       } else {
         console.error("Update seller error message:", error);
@@ -277,14 +273,13 @@ const sellerSlice = createSlice({
       .addCase(fetchSellerProfile.pending, (state) => {
         state.loading = true;
         state.error = null;
-        state.profileUpdated=false;
+        state.profileUpdated = false;
       })
       .addCase(
         fetchSellerProfile.fulfilled,
         (state, action: PayloadAction<Seller>) => {
           state.profile = action.payload;
           state.loading = false;
-         
         }
       )
       .addCase(fetchSellerProfile.rejected, (state, action) => {
@@ -326,7 +321,7 @@ const sellerSlice = createSlice({
       .addCase(updateSeller.pending, (state) => {
         state.loading = true;
         state.error = null;
-        state.profileUpdated=false;
+        state.profileUpdated = false;
       })
       .addCase(
         updateSeller.fulfilled,
@@ -337,9 +332,9 @@ const sellerSlice = createSlice({
           if (index !== -1) {
             state.sellers[index] = action.payload;
           }
-          state.profile=action.payload
+          state.profile = action.payload;
           state.loading = false;
-          state.profileUpdated=true;
+          state.profileUpdated = true;
         }
       )
       .addCase(updateSeller.rejected, (state, action) => {

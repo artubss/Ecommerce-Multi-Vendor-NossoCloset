@@ -14,34 +14,36 @@ const BecomeSeller = () => {
   const dispatch = useAppDispatch();
   const location = useLocation();
   const [isLoginPage, setIsLoginPage] = useState(false);
-  const { sellerAuth } = useAppSelector(store => store)
+  const { sellerAuth } = useAppSelector((store) => store);
 
-  const handleCloseSnackbar = () => setSnackbarOpen(false)
+  const handleCloseSnackbar = () => setSnackbarOpen(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   useEffect(() => {
-
     if (sellerAuth.sellerCreated || sellerAuth.error || sellerAuth.otpSent) {
       setSnackbarOpen(true);
-      console.log("store ", sellerAuth.error)
+      console.log("store ", sellerAuth.error);
     }
-
-  }, [sellerAuth.sellerCreated, sellerAuth.error, sellerAuth.otpSent])
+  }, [sellerAuth.sellerCreated, sellerAuth.error, sellerAuth.otpSent]);
 
   return (
     <div className="grid md:gap-10 grid-cols-3 min-h-screen ">
       <section className="lg:col-span-1 md:col-span-2 col-span-3  p-10 shadow-lg rounded-b-md">
+        {!isLoginPage ? <SellerAccountForm /> : <SellerLoginForm />}
 
-        {!isLoginPage ?
-          <SellerAccountForm /> :
-          <SellerLoginForm />
-        }
-
-        <div className='mt-10 space-y-2'>
-          <h1 className='text-center text-sm font-medium'>{isLoginPage && "Don't"} have account ? </h1>
-          <Button onClick={() => setIsLoginPage(!isLoginPage)} fullWidth sx={{ py: "11px" }} variant='outlined'>{isLoginPage ? "Register" : "Login"}</Button>
+        <div className="mt-10 space-y-2">
+          <h1 className="text-center text-sm font-medium">
+            {isLoginPage && "Don't"} have account ?{" "}
+          </h1>
+          <Button
+            onClick={() => setIsLoginPage(!isLoginPage)}
+            fullWidth
+            sx={{ py: "11px" }}
+            variant="outlined"
+          >
+            {isLoginPage ? "Register" : "Login"}
+          </Button>
         </div>
-
       </section>
       <section className=" hidden md:col-span-1 md:flex  lg:col-span-2  justify-center items-center">
         <div className="lg:w-[70%] px-5 space-y-10">
@@ -54,25 +56,26 @@ const BecomeSeller = () => {
           {/* <div>
                 <p className=" logo absolute p-6 rounded-t-full text-white text-center top-0 left-16 right-11 bg-teal-500">Nosso Closet</p>
             </div> */}
-
         </div>
-
-
       </section>
-
 
       <Snackbar
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
-        open={snackbarOpen} autoHideDuration={6000}
+        open={snackbarOpen}
+        autoHideDuration={6000}
         onClose={handleCloseSnackbar}
       >
         <Alert
           onClose={handleCloseSnackbar}
           severity={sellerAuth.error ? "error" : "success"}
           variant="filled"
-          sx={{ width: '100%' }}
+          sx={{ width: "100%" }}
         >
-          {sellerAuth.error ? sellerAuth.error : sellerAuth.sellerCreated ? sellerAuth.sellerCreated : " otp sent to your email!"}
+          {sellerAuth.error
+            ? sellerAuth.error
+            : sellerAuth.sellerCreated
+            ? sellerAuth.sellerCreated
+            : " otp sent to your email!"}
         </Alert>
       </Snackbar>
     </div>

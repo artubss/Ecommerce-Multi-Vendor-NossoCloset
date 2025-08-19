@@ -1,10 +1,10 @@
-package com.nossocloset.controller;
+package com.zosh.controller;
 
-import com.nossocloset.dto.RevenueChart;
-import com.nossocloset.exception.SellerException;
-import com.nossocloset.model.Seller;
-import com.nossocloset.service.RevenueService;
-import com.nossocloset.service.SellerService;
+import com.zosh.dto.RevenueChart;
+import com.zosh.exception.SellerException;
+import com.zosh.model.Seller;
+import com.zosh.service.RevenueService;
+import com.zosh.service.SellerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/seller/revenue/chart")
 public class RevenueController {
+
     private final RevenueService revenueService;
     private final SellerService sellerService;
 

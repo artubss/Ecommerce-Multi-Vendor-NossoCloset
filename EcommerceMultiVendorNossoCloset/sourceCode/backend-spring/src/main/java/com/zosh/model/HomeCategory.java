@@ -1,7 +1,10 @@
-package com.nossocloset.model;
+package com.zosh.model;
 
-import com.nossocloset.domain.HomeCategorySection;
+import com.zosh.domain.HomeCategorySection;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -16,6 +19,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class HomeCategory {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -23,5 +27,8 @@ public class HomeCategory {
     private String name;
     private String image;
     private String categoryId;
+
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "VARCHAR(50)")
     private HomeCategorySection section;
 }

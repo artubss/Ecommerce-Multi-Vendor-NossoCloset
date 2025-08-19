@@ -1,19 +1,20 @@
-package com.nossocloset.service.impl;
+package com.zosh.service.impl;
 
-import com.nossocloset.config.JwtProvider;
-import com.nossocloset.domain.AccountStatus;
-import com.nossocloset.domain.USER_ROLE;
-import com.nossocloset.exception.SellerException;
-import com.nossocloset.model.Address;
-import com.nossocloset.model.Seller;
-import com.nossocloset.repository.AddressRepository;
-import com.nossocloset.repository.SellerRepository;
-import com.nossocloset.service.SellerService;
+import com.zosh.config.JwtProvider;
+import com.zosh.domain.AccountStatus;
+import com.zosh.domain.USER_ROLE;
+import com.zosh.exception.SellerException;
+import com.zosh.model.Address;
+import com.zosh.model.Seller;
+import com.zosh.repository.AddressRepository;
+import com.zosh.repository.SellerRepository;
+import com.zosh.service.SellerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +26,6 @@ public class SellerServiceImpl implements SellerService {
     private final AddressRepository addressRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
-
 
     @Override
     public Seller getSellerProfile(String jwt) throws SellerException {
@@ -41,7 +41,6 @@ public class SellerServiceImpl implements SellerService {
         }
 
         Address savedAddress = addressRepository.save(seller.getPickupAddress());
-
 
         Seller newSeller = new Seller();
         newSeller.setEmail(seller.getEmail());
@@ -79,15 +78,23 @@ public class SellerServiceImpl implements SellerService {
 
     @Override
     public List<Seller> getAllSellers(AccountStatus status) {
-        return sellerRepository.findByAccountStatus(status);
+        try {
+            if (status == null) {
+                return sellerRepository.findAll();
+            }
+            List<Seller> sellers = sellerRepository.findByAccountStatus(status);
+            return sellers != null ? sellers : new ArrayList<>();
+        } catch (Exception e) {
+            // Se houver erro, retorna lista vazia
+            return new ArrayList<>();
+        }
     }
 
     @Override
     public Seller updateSeller(Long id, Seller seller) throws SellerException {
         Seller existingSeller = sellerRepository.findById(id)
-                .orElseThrow(() ->
-                        new SellerException("Seller not found with id " + id));
-
+                .orElseThrow(()
+                        -> new SellerException("Seller not found with id " + id));
 
         if (seller.getSellerName() != null) {
             existingSeller.setSellerName(seller.getSellerName());
@@ -100,8 +107,7 @@ public class SellerServiceImpl implements SellerService {
         }
 
         if (seller.getBusinessDetails() != null
-                && seller.getBusinessDetails().getBusinessName() != null
-        ) {
+                && seller.getBusinessDetails().getBusinessName() != null) {
 
             existingSeller.getBusinessDetails().setBusinessName(
                     seller.getBusinessDetails().getBusinessName()
@@ -111,8 +117,7 @@ public class SellerServiceImpl implements SellerService {
         if (seller.getBankDetails() != null
                 && seller.getBankDetails().getAccountHolderName() != null
                 && seller.getBankDetails().getIfscCode() != null
-                && seller.getBankDetails().getAccountNumber() != null
-        ) {
+                && seller.getBankDetails().getAccountNumber() != null) {
 
             existingSeller.getBankDetails().setAccountHolderName(
                     seller.getBankDetails().getAccountHolderName()
@@ -128,8 +133,7 @@ public class SellerServiceImpl implements SellerService {
                 && seller.getPickupAddress().getAddress() != null
                 && seller.getPickupAddress().getMobile() != null
                 && seller.getPickupAddress().getCity() != null
-                && seller.getPickupAddress().getState() != null
-        ) {
+                && seller.getPickupAddress().getState() != null) {
             existingSeller.getPickupAddress()
                     .setAddress(seller.getPickupAddress().getAddress());
             existingSeller.getPickupAddress().setCity(seller.getPickupAddress().getCity());
@@ -140,7 +144,6 @@ public class SellerServiceImpl implements SellerService {
         if (seller.getGSTIN() != null) {
             existingSeller.setGSTIN(seller.getGSTIN());
         }
-
 
         return sellerRepository.save(existingSeller);
 

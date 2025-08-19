@@ -1,18 +1,18 @@
-package com.nossocloset.controller;
+package com.zosh.controller;
 
-import com.nossocloset.config.JwtProvider;
-import com.nossocloset.domain.AccountStatus;
-import com.nossocloset.domain.USER_ROLE;
-import com.nossocloset.exception.SellerException;
-import com.nossocloset.model.Seller;
-import com.nossocloset.model.SellerReport;
-import com.nossocloset.model.VerificationCode;
-import com.nossocloset.repository.VerificationCodeRepository;
-import com.nossocloset.response.ApiResponse;
-import com.nossocloset.response.AuthResponse;
-import com.nossocloset.service.*;
-import com.nossocloset.service.impl.CustomeUserServiceImplementation;
-import com.nossocloset.utils.OtpUtils;
+import com.zosh.config.JwtProvider;
+import com.zosh.domain.AccountStatus;
+import com.zosh.domain.USER_ROLE;
+import com.zosh.exception.SellerException;
+import com.zosh.model.Seller;
+import com.zosh.model.SellerReport;
+import com.zosh.model.VerificationCode;
+import com.zosh.repository.VerificationCodeRepository;
+import com.zosh.response.ApiResponse;
+import com.zosh.response.AuthResponse;
+import com.zosh.service.*;
+import com.zosh.service.impl.CustomeUserServiceImplementation;
+import com.zosh.utils.OtpUtils;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +42,6 @@ public class SellerController {
     private final JwtProvider jwtProvider;
     private final CustomeUserServiceImplementation customeUserServiceImplementation;
 
-
     @PostMapping("/sent/login-top")
     public ResponseEntity<ApiResponse> sentLoginOtp(@RequestBody VerificationCode req) throws MessagingException, SellerException {
         Seller seller = sellerService.getSellerByEmail(req.getEmail());
@@ -50,7 +49,7 @@ public class SellerController {
         String otp = OtpUtils.generateOTP();
         VerificationCode verificationCode = verificationService.createVerificationCode(otp, req.getEmail());
 
-        String subject = "Zosh Bazaar Login Otp";
+        String subject = "Nosso Closet Login Otp";
         String text = "your login otp is - ";
         emailService.sendVerificationOtpEmail(req.getEmail(), verificationCode.getOtp(), subject, text);
 
@@ -62,7 +61,6 @@ public class SellerController {
     @PostMapping("/verify/login-top")
     public ResponseEntity<AuthResponse> verifyLoginOtp(@RequestBody VerificationCode req) throws MessagingException, SellerException {
 //        Seller savedSeller = sellerService.createSeller(seller);
-
 
         String otp = req.getOtp();
         String email = req.getEmail();
@@ -82,9 +80,7 @@ public class SellerController {
         authResponse.setJwt(token);
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
 
-
         String roleName = authorities.isEmpty() ? null : authorities.iterator().next().getAuthority();
-
 
         authResponse.setRole(USER_ROLE.valueOf(roleName));
 
@@ -107,7 +103,6 @@ public class SellerController {
     @PatchMapping("/verify/{otp}")
     public ResponseEntity<Seller> verifySellerEmail(@PathVariable String otp) throws SellerException {
 
-
         VerificationCode verificationCode = verificationCodeRepository.findByOtp(otp);
 
         if (verificationCode == null || !verificationCode.getOtp().equals(otp)) {
@@ -119,7 +114,6 @@ public class SellerController {
         return new ResponseEntity<>(seller, HttpStatus.OK);
     }
 
-
     @PostMapping
     public ResponseEntity<Seller> createSeller(@RequestBody Seller seller) throws SellerException, MessagingException {
         Seller savedSeller = sellerService.createSeller(seller);
@@ -127,8 +121,8 @@ public class SellerController {
         String otp = OtpUtils.generateOTP();
         VerificationCode verificationCode = verificationService.createVerificationCode(otp, seller.getEmail());
 
-        String subject = "Zosh Bazaar Email Verification Code";
-        String text = "Welcome to Zosh Bazaar, verify your account using this link ";
+        String subject = "Nosso Closet Email Verification Code";
+        String text = "Bem-vindo ao Nosso Closet, verifique sua conta usando este link ";
         String frontend_url = "http://localhost:3001/verify-seller/";
         emailService.sendVerificationOtpEmail(seller.getEmail(), verificationCode.getOtp(), subject, text + frontend_url);
         return new ResponseEntity<>(savedSeller, HttpStatus.CREATED);

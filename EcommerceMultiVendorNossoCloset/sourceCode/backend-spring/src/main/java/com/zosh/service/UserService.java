@@ -1,13 +1,12 @@
-package com.nossocloset.service;
+package com.zosh.service;
 
-import com.nossocloset.exception.UserException;
-import com.nossocloset.model.User;
+import com.zosh.exception.UserException;
+import com.zosh.model.User;
 
 public interface UserService {
 
-	public User findUserProfileByJwt(String jwt) throws UserException;
-	
-	public User findUserByEmail(String email) throws UserException;
+    public User findUserProfileByJwt(String jwt) throws UserException;
 
+    public User findUserByEmail(String email) throws UserException;
 
 }

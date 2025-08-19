@@ -1,4 +1,4 @@
-package com.nossocloset.model;
+package com.zosh.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -24,5 +24,5 @@ public class Wishlist {
     private User user;
 
     @ManyToMany
-    private Set<Product> products=new HashSet<>();
+    private Set<Product> products = new HashSet<>();
 }

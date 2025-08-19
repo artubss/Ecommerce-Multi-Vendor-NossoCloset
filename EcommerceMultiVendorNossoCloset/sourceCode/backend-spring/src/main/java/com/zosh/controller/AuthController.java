@@ -1,12 +1,11 @@
-package com.nossocloset.controller;
+package com.zosh.controller;
 
-
-import com.nossocloset.domain.USER_ROLE;
-import com.nossocloset.exception.SellerException;
-import com.nossocloset.exception.UserException;
-import com.nossocloset.model.*;
-import com.nossocloset.request.SignupRequest;
-import com.nossocloset.service.AuthService;
+import com.zosh.domain.USER_ROLE;
+import com.zosh.exception.SellerException;
+import com.zosh.exception.UserException;
+import com.zosh.model.*;
+import com.zosh.request.SignupRequest;
+import com.zosh.service.AuthService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -18,13 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.nossocloset.request.LoginRequest;
-import com.nossocloset.response.ApiResponse;
-import com.nossocloset.response.AuthResponse;
-
+import com.zosh.request.LoginRequest;
+import com.zosh.response.ApiResponse;
+import com.zosh.response.AuthResponse;
 
 import jakarta.validation.Valid;
-
 
 @RestController
 @RequestMapping("/auth")
@@ -32,7 +29,6 @@ import jakarta.validation.Valid;
 public class AuthController {
 
     private final AuthService authService;
-
 
     @PostMapping("/sent/login-signup-otp")
     public ResponseEntity<ApiResponse> sentLoginOtp(
@@ -51,7 +47,6 @@ public class AuthController {
             @RequestBody SignupRequest req)
             throws SellerException {
 
-
         String token = authService.createUser(req);
         AuthResponse authResponse = new AuthResponse();
         authResponse.setJwt(token);
@@ -68,8 +63,5 @@ public class AuthController {
         AuthResponse authResponse = authService.signin(loginRequest);
         return new ResponseEntity<>(authResponse, HttpStatus.OK);
     }
-
-
-
 
 }

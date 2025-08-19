@@ -1,4 +1,4 @@
-package com.nossocloset.model;
+package com.zosh.model;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,9 +13,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 import lombok.*;
 
 @Entity
+@Table(name = "app_carts") // Renomeando para evitar conflitos
 @Setter
 @Getter
 @NoArgsConstructor
@@ -36,13 +38,12 @@ public class Cart {
     private double totalSellingPrice;
 
     private int totalItem;
-    
+
     private int totalMrpPrice;
-    
+
     private int discount;
 
     private String couponCode;
     private int couponPrice;
-
 
 }

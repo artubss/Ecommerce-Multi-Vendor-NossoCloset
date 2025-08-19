@@ -1,72 +1,64 @@
-package com.nossocloset.service.impl;
+package com.zosh.service.impl;
 
-
-import com.nossocloset.exception.UserException;
-import com.nossocloset.service.UserService;
+import com.zosh.exception.UserException;
+import com.zosh.service.UserService;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.nossocloset.config.JwtProvider;
-import com.nossocloset.model.User;
-import com.nossocloset.repository.PasswordResetTokenRepository;
-import com.nossocloset.repository.UserRepository;
+import com.zosh.config.JwtProvider;
+import com.zosh.model.User;
+import com.zosh.repository.PasswordResetTokenRepository;
+import com.zosh.repository.UserRepository;
 
 @Service
 public class UserServiceImplementation implements UserService {
 
+    private UserRepository userRepository;
+    private JwtProvider jwtProvider;
+    private PasswordEncoder passwordEncoder;
+    private PasswordResetTokenRepository passwordResetTokenRepository;
+    private JavaMailSender javaMailSender;
 
-	private UserRepository userRepository;
-	private JwtProvider jwtProvider;
-	private PasswordEncoder passwordEncoder;
-	private PasswordResetTokenRepository passwordResetTokenRepository;
-	private JavaMailSender javaMailSender;
-	
-	public UserServiceImplementation(
-			UserRepository userRepository,
-			JwtProvider jwtProvider,
-			PasswordEncoder passwordEncoder,
-			PasswordResetTokenRepository passwordResetTokenRepository,
-			JavaMailSender javaMailSender) {
-		
-		this.userRepository=userRepository;
-		this.jwtProvider=jwtProvider;
-		this.passwordEncoder=passwordEncoder;
-		this.passwordResetTokenRepository=passwordResetTokenRepository;
-		this.javaMailSender=javaMailSender;
-		
-	}
+    public UserServiceImplementation(
+            UserRepository userRepository,
+            JwtProvider jwtProvider,
+            PasswordEncoder passwordEncoder,
+            PasswordResetTokenRepository passwordResetTokenRepository,
+            JavaMailSender javaMailSender) {
 
-	@Override
-	public User findUserProfileByJwt(String jwt) throws UserException {
-		String email=jwtProvider.getEmailFromJwtToken(jwt);
-		
-		
-		User user = userRepository.findByEmail(email);
-		
-		if(user==null) {
-			throw new UserException("user not exist with email "+email);
-		}
-		return user;
-	}
+        this.userRepository = userRepository;
+        this.jwtProvider = jwtProvider;
+        this.passwordEncoder = passwordEncoder;
+        this.passwordResetTokenRepository = passwordResetTokenRepository;
+        this.javaMailSender = javaMailSender;
 
+    }
 
+    @Override
+    public User findUserProfileByJwt(String jwt) throws UserException {
+        String email = jwtProvider.getEmailFromJwtToken(jwt);
 
-	
-	@Override
-	public User findUserByEmail(String username) throws UserException {
-		
-		User user=userRepository.findByEmail(username);
-		
-		if(user!=null) {
-			
-			return user;
-		}
-		
-		throw new UserException("user not exist with username "+username);
-	}
+        User user = userRepository.findByEmail(email);
 
+        if (user == null) {
+            throw new UserException("user not exist with email " + email);
+        }
+        return user;
+    }
 
+    @Override
+    public User findUserByEmail(String username) throws UserException {
+
+        User user = userRepository.findByEmail(username);
+
+        if (user != null) {
+
+            return user;
+        }
+
+        throw new UserException("user not exist with username " + username);
+    }
 
 }

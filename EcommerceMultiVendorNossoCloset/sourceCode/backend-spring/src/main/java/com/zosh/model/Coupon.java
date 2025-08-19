@@ -1,4 +1,4 @@
-package com.nossocloset.model;
+package com.zosh.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -30,9 +30,9 @@ public class Coupon {
 
     private double minimumOrderValue;
 
-    private boolean isActive=true;
+    private boolean isActive = true;
 
     @ManyToMany(mappedBy = "usedCoupons")
-    private Set<User> usedByUsers=new HashSet<>();
+    private Set<User> usedByUsers = new HashSet<>();
 
 }

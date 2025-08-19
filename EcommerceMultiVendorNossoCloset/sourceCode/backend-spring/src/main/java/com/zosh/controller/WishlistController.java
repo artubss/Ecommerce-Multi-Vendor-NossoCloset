@@ -1,14 +1,14 @@
-package com.nossocloset.controller;
+package com.zosh.controller;
 
-import com.nossocloset.exception.ProductException;
-import com.nossocloset.exception.UserException;
-import com.nossocloset.exception.WishlistNotFoundException;
-import com.nossocloset.model.Product;
-import com.nossocloset.model.User;
-import com.nossocloset.model.Wishlist;
-import com.nossocloset.service.ProductService;
-import com.nossocloset.service.UserService;
-import com.nossocloset.service.WishlistService;
+import com.zosh.exception.ProductException;
+import com.zosh.exception.UserException;
+import com.zosh.exception.WishlistNotFoundException;
+import com.zosh.model.Product;
+import com.zosh.model.User;
+import com.zosh.model.Wishlist;
+import com.zosh.service.ProductService;
+import com.zosh.service.UserService;
+import com.zosh.service.WishlistService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +22,6 @@ public class WishlistController {
     private final WishlistService wishlistService;
     private final ProductService productService;
     private final UserService userService;
-
 
     @PostMapping("/create")
     public ResponseEntity<Wishlist> createWishlist(@RequestBody User user) {
@@ -45,7 +44,7 @@ public class WishlistController {
             @RequestHeader("Authorization") String jwt) throws WishlistNotFoundException, ProductException, UserException {
 
         Product product = productService.findProductById(productId);
-        User user=userService.findUserProfileByJwt(jwt);
+        User user = userService.findUserProfileByJwt(jwt);
         Wishlist updatedWishlist = wishlistService.addProductToWishlist(
                 user,
                 product
@@ -55,6 +54,3 @@ public class WishlistController {
     }
 
 }
-
-
-

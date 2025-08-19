@@ -1,9 +1,8 @@
-package com.nossocloset.services.impl;
+package com.zosh.services.impl;
 
-
-import com.nossocloset.domain.USER_ROLE;
-import com.nossocloset.model.User;
-import com.nossocloset.repository.UserRepository;
+import com.zosh.domain.USER_ROLE;
+import com.zosh.model.User;
+import com.zosh.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,25 +15,23 @@ public class DataInitializationComponent implements CommandLineRunner {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-
-
     @Override
     public void run(String... args) {
         initializeAdminUser();
     }
 
     private void initializeAdminUser() {
-        String adminUsername = "codewithzosh@gmail.com";
+        String adminUsername = "arthurbezerra5000@gmail.com";
 
-        if (userRepository.findByEmail(adminUsername)==null) {
+        if (userRepository.findByEmail(adminUsername) == null) {
             User adminUser = new User();
 
-            adminUser.setPassword(passwordEncoder.encode("codewithzosh"));
-            adminUser.setFullName("Zosh");
+            adminUser.setPassword(passwordEncoder.encode("nossoClosetAmoVerMe"));
+            adminUser.setFullName("Nosso Closet Admin");
             adminUser.setEmail(adminUsername);
             adminUser.setRole(USER_ROLE.ROLE_ADMIN);
 
-            User admin=userRepository.save(adminUser);
+            User admin = userRepository.save(adminUser);
         }
     }
 

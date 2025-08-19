@@ -1,4 +1,4 @@
-package com.nossocloset.model;
+package com.zosh.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -15,28 +15,26 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 public class OrderItem {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	
-	@JsonIgnore
-	@ManyToOne
-	private Order order;
-	
-	@ManyToOne
-	private Product product;
-	
-	private String size;
-	
-	private int quantity;
-	
-	private Integer mrpPrice;
-	
-	private Integer sellingPrice;
-	
-	private Long userId;
 
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @JsonIgnore
+    @ManyToOne
+    private Order order;
+
+    @ManyToOne
+    private Product product;
+
+    private String size;
+
+    private int quantity;
+
+    private Integer mrpPrice;
+
+    private Integer sellingPrice;
+
+    private Long userId;
 
 }

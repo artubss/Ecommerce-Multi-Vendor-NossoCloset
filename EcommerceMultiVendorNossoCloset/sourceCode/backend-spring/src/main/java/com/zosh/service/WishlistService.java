@@ -1,10 +1,9 @@
-package com.nossocloset.service;
+package com.zosh.service;
 
-
-import com.nossocloset.exception.WishlistNotFoundException;
-import com.nossocloset.model.Product;
-import com.nossocloset.model.User;
-import com.nossocloset.model.Wishlist;
+import com.zosh.exception.WishlistNotFoundException;
+import com.zosh.model.Product;
+import com.zosh.model.User;
+import com.zosh.model.Wishlist;
 
 public interface WishlistService {
 
@@ -15,4 +14,3 @@ public interface WishlistService {
     Wishlist addProductToWishlist(User user, Product product) throws WishlistNotFoundException;
 
 }
-

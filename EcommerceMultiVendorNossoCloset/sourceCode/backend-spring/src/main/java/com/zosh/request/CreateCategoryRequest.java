@@ -1,4 +1,4 @@
-package com.nossocloset.request;
+package com.zosh.request;
 
 import lombok.Data;
 

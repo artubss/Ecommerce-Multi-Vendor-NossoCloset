@@ -1,8 +1,8 @@
-package com.nossocloset.service.impl;
+package com.zosh.service.impl;
 
-import com.nossocloset.model.HomeCategory;
-import com.nossocloset.repository.HomeCategoryRepository;
-import com.nossocloset.service.HomeCategoryService;
+import com.zosh.model.HomeCategory;
+import com.zosh.repository.HomeCategoryRepository;
+import com.zosh.service.HomeCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,6 @@ import java.util.List;
 public class HomeCategoryServiceImpl implements HomeCategoryService {
 
     private final HomeCategoryRepository homeCategoryRepository;
-
 
     @Override
     public HomeCategory createCategory(HomeCategory categories) {
@@ -39,14 +38,13 @@ public class HomeCategoryServiceImpl implements HomeCategoryService {
     public HomeCategory updateCategory(HomeCategory category, Long id) throws Exception {
         HomeCategory existingCategory = homeCategoryRepository.findById(id)
                 .orElseThrow(() -> new Exception("Category not found"));
-        if(category.getImage()!=null){
+        if (category.getImage() != null) {
             existingCategory.setImage(category.getImage());
         }
-        if(category.getCategoryId()!=null){
+        if (category.getCategoryId() != null) {
             existingCategory.setCategoryId(category.getCategoryId());
         }
         return homeCategoryRepository.save(existingCategory);
     }
-
 
 }

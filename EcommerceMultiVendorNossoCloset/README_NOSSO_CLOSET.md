@@ -16,11 +16,13 @@ O **Nosso Closet** é uma plataforma de e-commerce multi-vendedor especializada 
 ## 👑 Acesso de Administrador
 
 ### Credenciais de Login:
-- **Email**: `codewithzosh@gmail.com`
-- **Senha**: `codewithzosh`
+
+- **Email**: `arthurbezerra5000@gmail.com`
+- **Senha**: `nossoClosetAmoVerMe`
 - **Função**: Administrador Principal
 
 ### Funcionalidades do Admin:
+
 - Gestão de vendedores
 - Aprovação de produtos
 - Gestão de cupons e descontos
@@ -31,6 +33,7 @@ O **Nosso Closet** é uma plataforma de e-commerce multi-vendedor especializada 
 ## 🏷️ Categorias Principais
 
 ### 1. **Masculino**
+
 - Camisetas (Básicas, Polo, Esportivas, Estampadas)
 - Camisas (Sociais, Casuais, Manga Longa/Curta)
 - Calças (Jeans, Sociais, Esportivas, Cargo)
@@ -40,6 +43,7 @@ O **Nosso Closet** é uma plataforma de e-commerce multi-vendedor especializada 
 - Acessórios
 
 ### 2. **Feminino**
+
 - Vestidos
 - Blusas
 - Calças
@@ -52,6 +56,7 @@ O **Nosso Closet** é uma plataforma de e-commerce multi-vendedor especializada 
 - Bolsas
 
 ### 3. **Infantil**
+
 - Meninos (2-12 anos)
 - Meninas (2-12 anos)
 - Bebês (0-2 anos)
@@ -59,6 +64,7 @@ O **Nosso Closet** é uma plataforma de e-commerce multi-vendedor especializada 
 - Acessórios Infantis
 
 ### 4. **Academia & Esporte**
+
 - Roupas de Academia
 - Roupas de Corrida
 - Roupas de Yoga
@@ -66,6 +72,7 @@ O **Nosso Closet** é uma plataforma de e-commerce multi-vendedor especializada 
 - Equipamentos
 
 ### 5. **Acessórios**
+
 - Bolsas
 - Cintos
 - Joias
@@ -86,6 +93,7 @@ O **Nosso Closet** é uma plataforma de e-commerce multi-vendedor especializada 
 ## 🎨 Filtros de Cores
 
 Todas as cores foram traduzidas para português brasileiro:
+
 - Rosa, Verde, Azul, Vermelho, Amarelo
 - Preto, Branco, Cinza, Marrom
 - E muitas outras cores de moda
@@ -98,6 +106,7 @@ Todas as cores foram traduzidas para português brasileiro:
 ## 🔧 Tecnologias Utilizadas
 
 ### Frontend:
+
 - React + TypeScript
 - Vite
 - Material-UI
@@ -105,12 +114,14 @@ Todas as cores foram traduzidas para português brasileiro:
 - React Router
 
 ### Backend:
+
 - Spring Boot (Java)
 - Spring Security
 - JWT Authentication
 - PostgreSQL/H2 Database
 
 ### Infraestrutura:
+
 - Docker
 - Nginx
 - MySQL/PostgreSQL
@@ -138,12 +149,14 @@ sourceCode/
 ## 🚀 Como Executar
 
 ### 1. **Backend**
+
 ```bash
 cd sourceCode/backend-spring
 ./mvnw spring-boot:run
 ```
 
 ### 2. **Frontend**
+
 ```bash
 cd sourceCode/frontend-vite
 npm install
@@ -151,20 +164,22 @@ npm run dev
 ```
 
 ### 3. **Docker (Recomendado)**
+
 ```bash
 docker-compose up -d
 ```
 
 ## 🌐 URLs de Acesso
 
-- **Frontend**: http://localhost:5173
+- **Frontend**: http://localhost:3001
 - **Backend**: http://localhost:5454
-- **Admin**: http://localhost:5173/admin
-- **Vendedor**: http://localhost:5173/seller
+- **Admin**: http://localhost:3001/admin
+- **Vendedor**: http://localhost:3001/seller
 
 ## 📧 Configuração de Email
 
 O sistema está configurado para usar Gmail SMTP:
+
 - **Host**: smtp.gmail.com
 - **Porta**: 587
 - **Usuário**: arthurbezerra5000@gmail.com
@@ -179,6 +194,7 @@ O sistema está configurado para usar Gmail SMTP:
 ## 📱 Responsividade
 
 O projeto é totalmente responsivo e funciona em:
+
 - Desktop
 - Tablet
 - Mobile

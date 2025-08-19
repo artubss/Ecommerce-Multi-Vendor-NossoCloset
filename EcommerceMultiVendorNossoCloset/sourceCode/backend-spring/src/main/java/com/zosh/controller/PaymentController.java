@@ -1,14 +1,14 @@
-package com.nossocloset.controller;
+package com.zosh.controller;
 
 import com.razorpay.RazorpayException;
 import com.stripe.exception.StripeException;
-import com.nossocloset.domain.PaymentMethod;
-import com.nossocloset.model.*;
-import com.nossocloset.repository.CartItemRepository;
-import com.nossocloset.repository.CartRepository;
-import com.nossocloset.response.ApiResponse;
-import com.nossocloset.response.PaymentLinkResponse;
-import com.nossocloset.service.*;
+import com.zosh.domain.PaymentMethod;
+import com.zosh.model.*;
+import com.zosh.repository.CartItemRepository;
+import com.zosh.repository.CartRepository;
+import com.zosh.response.ApiResponse;
+import com.zosh.response.PaymentLinkResponse;
+import com.zosh.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +27,6 @@ public class PaymentController {
     private final CartRepository cartRepository;
     private final CartItemRepository cartItemRepository;
 
-
     @PostMapping("/api/payment/{paymentMethod}/order/{orderId}")
     public ResponseEntity<PaymentLinkResponse> paymentHandler(
             @PathVariable PaymentMethod paymentMethod,
@@ -38,7 +37,7 @@ public class PaymentController {
 
         PaymentLinkResponse paymentResponse;
 
-        PaymentOrder order= paymentService.getPaymentOrderById(orderId);
+        PaymentOrder order = paymentService.getPaymentOrderById(orderId);
 
 //        if(paymentMethod.equals(PaymentMethod.RAZORPAY)){
 //            paymentResponse=paymentService.createRazorpayPaymentLink(user,
@@ -50,10 +49,8 @@ public class PaymentController {
 //                    order.getAmount(),
 //                    order.getId());
 //        }
-
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
-
 
     @GetMapping("/api/payment/{paymentId}")
     public ResponseEntity<ApiResponse> paymentSuccessHandler(
@@ -65,7 +62,7 @@ public class PaymentController {
 
         PaymentLinkResponse paymentResponse;
 
-        PaymentOrder paymentOrder= paymentService
+        PaymentOrder paymentOrder = paymentService
                 .getPaymentOrderByPaymentId(paymentLinkId);
 
         boolean paymentSuccess = paymentService.ProceedPaymentOrder(
@@ -73,17 +70,17 @@ public class PaymentController {
                 paymentId,
                 paymentLinkId
         );
-        if(paymentSuccess){
-            for(Order order:paymentOrder.getOrders()){
+        if (paymentSuccess) {
+            for (Order order : paymentOrder.getOrders()) {
                 transactionService.createTransaction(order);
-                Seller seller=sellerService.getSellerById(order.getSellerId());
-                SellerReport report=sellerReportService.getSellerReport(seller);
-                report.setTotalOrders(report.getTotalOrders()+1);
-                report.setTotalEarnings(report.getTotalEarnings()+order.getTotalSellingPrice());
-                report.setTotalSales(report.getTotalSales()+order.getOrderItems().size());
+                Seller seller = sellerService.getSellerById(order.getSellerId());
+                SellerReport report = sellerReportService.getSellerReport(seller);
+                report.setTotalOrders(report.getTotalOrders() + 1);
+                report.setTotalEarnings(report.getTotalEarnings() + order.getTotalSellingPrice());
+                report.setTotalSales(report.getTotalSales() + order.getOrderItems().size());
                 sellerReportService.updateSellerReport(report);
             }
-            Cart cart=cartRepository.findByUserId(user.getId());
+            Cart cart = cartRepository.findByUserId(user.getId());
             cart.setCouponPrice(0);
             cart.setCouponCode(null);
 //        Set<CartItem> items=cart.getCartItems();
@@ -92,7 +89,7 @@ public class PaymentController {
             cartRepository.save(cart);
 
         }
-      
+
         ApiResponse res = new ApiResponse();
         res.setMessage("Payment successful");
         res.setStatus(true);

@@ -1,8 +1,8 @@
-package com.nossocloset.domain;
+package com.zosh.domain;
 
 public enum PaymentStatus {
 
-	PENDING,
+    PENDING,
     PROCESSING,
     COMPLETED,
     FAILED

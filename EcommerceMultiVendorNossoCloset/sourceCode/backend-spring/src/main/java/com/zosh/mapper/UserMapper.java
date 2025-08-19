@@ -1,11 +1,11 @@
-package com.nossocloset.mapper;
+package com.zosh.mapper;
 
-import com.nossocloset.dto.UserDto;
-import com.nossocloset.model.User;
+import com.zosh.dto.UserDto;
+import com.zosh.model.User;
 
 public class UserMapper {
 
-    public static UserDto toUserDto(User user){
+    public static UserDto toUserDto(User user) {
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setFullName(user.getFullName());

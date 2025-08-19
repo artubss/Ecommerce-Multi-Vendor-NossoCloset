@@ -1,11 +1,11 @@
-package com.nossocloset.controller;
+package com.zosh.controller;
 
-import com.nossocloset.exception.SellerException;
-import com.nossocloset.model.Order;
-import com.nossocloset.model.Seller;
-import com.nossocloset.model.Transaction;
-import com.nossocloset.service.SellerService;
-import com.nossocloset.service.TransactionService;
+import com.zosh.exception.SellerException;
+import com.zosh.model.Order;
+import com.zosh.model.Seller;
+import com.zosh.model.Transaction;
+import com.zosh.service.SellerService;
+import com.zosh.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +34,7 @@ public class TransactionController {
     @GetMapping("/seller")
     public ResponseEntity<List<Transaction>> getTransactionBySeller(
             @RequestHeader("Authorization") String jwt) throws SellerException {
-        Seller seller=sellerService.getSellerProfile(jwt);
+        Seller seller = sellerService.getSellerProfile(jwt);
 
         List<Transaction> transactions = transactionService.getTransactionBySeller(seller);
         return ResponseEntity.ok(transactions);

@@ -1,11 +1,11 @@
-package com.nossocloset.service.impl;
+package com.zosh.service.impl;
 
-import com.nossocloset.domain.HomeCategorySection;
-import com.nossocloset.model.Deal;
-import com.nossocloset.model.Home;
-import com.nossocloset.model.HomeCategory;
-import com.nossocloset.repository.DealRepository;
-import com.nossocloset.service.HomeService;
+import com.zosh.domain.HomeCategorySection;
+import com.zosh.model.Deal;
+import com.zosh.model.Home;
+import com.zosh.model.HomeCategory;
+import com.zosh.repository.DealRepository;
+import com.zosh.service.HomeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,25 +19,22 @@ public class HomeServiceImpl implements HomeService {
 
     private final DealRepository dealRepository;
 
-
-
     @Override
     public Home creatHomePageData(List<HomeCategory> allCategories) {
 
-
         List<HomeCategory> gridCategories = allCategories.stream()
-                .filter(category ->
-                        category.getSection() == HomeCategorySection.GRID)
+                .filter(category
+                        -> category.getSection() == HomeCategorySection.GRID)
                 .collect(Collectors.toList());
 
         List<HomeCategory> shopByCategories = allCategories.stream()
-                .filter(category ->
-                        category.getSection() == HomeCategorySection.SHOP_BY_CATEGORIES)
+                .filter(category
+                        -> category.getSection() == HomeCategorySection.SHOP_BY_CATEGORIES)
                 .collect(Collectors.toList());
 
         List<HomeCategory> electricCategories = allCategories.stream()
-                .filter(category ->
-                        category.getSection() == HomeCategorySection.ELECTRIC_CATEGORIES)
+                .filter(category
+                        -> category.getSection() == HomeCategorySection.ELECTRIC_CATEGORIES)
                 .collect(Collectors.toList());
 
         List<HomeCategory> dealCategories = allCategories.stream()
@@ -49,11 +46,12 @@ public class HomeServiceImpl implements HomeService {
         if (dealRepository.findAll().isEmpty()) {
             List<Deal> deals = allCategories.stream()
                     .filter(category -> category.getSection() == HomeCategorySection.DEALS)
-                    .map(category -> new Deal(null, 10, category))  // Assuming a discount of 10 for each deal
+                    .map(category -> new Deal(null, 10, category)) // Assuming a discount of 10 for each deal
                     .collect(Collectors.toList());
             createdDeals = dealRepository.saveAll(deals);
-        } else createdDeals = dealRepository.findAll();
-
+        } else {
+            createdDeals = dealRepository.findAll();
+        }
 
         Home home = new Home();
         home.setGrid(gridCategories);
@@ -64,6 +62,5 @@ public class HomeServiceImpl implements HomeService {
 
         return home;
     }
-
 
 }

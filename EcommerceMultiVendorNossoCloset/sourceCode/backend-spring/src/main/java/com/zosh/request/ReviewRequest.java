@@ -1,4 +1,4 @@
-package com.nossocloset.request;
+package com.zosh.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,10 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReviewRequest {
-	
-	private Long productId;
-	private String review;
 
+    private Long productId;
+    private String review;
 
-	
 }

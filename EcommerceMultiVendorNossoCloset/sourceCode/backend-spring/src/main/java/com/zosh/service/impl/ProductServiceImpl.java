@@ -1,13 +1,13 @@
-package com.nossocloset.service.impl;
+package com.zosh.service.impl;
 
-import com.nossocloset.exception.ProductException;
-import com.nossocloset.model.Category;
-import com.nossocloset.model.Product;
-import com.nossocloset.model.Seller;
-import com.nossocloset.repository.CategoryRepository;
-import com.nossocloset.repository.ProductRepository;
-import com.nossocloset.request.CreateProductRequest;
-import com.nossocloset.service.ProductService;
+import com.zosh.exception.ProductException;
+import com.zosh.model.Category;
+import com.zosh.model.Product;
+import com.zosh.model.Seller;
+import com.zosh.repository.CategoryRepository;
+import com.zosh.repository.ProductRepository;
+import com.zosh.request.CreateProductRequest;
+import com.zosh.service.ProductService;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Predicate;
 import lombok.RequiredArgsConstructor;
@@ -27,50 +27,46 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductServiceImpl implements ProductService {
 
-
     private final ProductRepository productRepository;
-    
-    private final CategoryRepository categoryRepository;
 
+    private final CategoryRepository categoryRepository;
 
     @Override
     public Product createProduct(CreateProductRequest req,
-
-                                 Seller seller
-                                 ) throws ProductException {
-
+            Seller seller
+    ) throws ProductException {
 
         int discountPercentage = calculateDiscountPercentage(req.getMrpPrice(), req.getSellingPrice());
 
-        Category category1=categoryRepository.findByCategoryId(req.getCategory());
-        if(category1==null){
-            Category category=new Category();
+        Category category1 = categoryRepository.findByCategoryId(req.getCategory());
+        if (category1 == null) {
+            Category category = new Category();
             category.setCategoryId(req.getCategory());
             category.setLevel(1);
-            category.setName(req.getCategory().replace("_"," "));
-            category1=categoryRepository.save(category);
+            category.setName(req.getCategory().replace("_", " "));
+            category1 = categoryRepository.save(category);
         }
 
-        Category category2=categoryRepository.findByCategoryId(req.getCategory2());
-        if(category2==null){
-            Category category=new Category();
+        Category category2 = categoryRepository.findByCategoryId(req.getCategory2());
+        if (category2 == null) {
+            Category category = new Category();
             category.setCategoryId(req.getCategory2());
             category.setLevel(2);
             category.setParentCategory(category1);
-            category.setName(req.getCategory2().replace("_"," "));
-            category2=categoryRepository.save(category);
+            category.setName(req.getCategory2().replace("_", " "));
+            category2 = categoryRepository.save(category);
         }
-        Category category3=categoryRepository.findByCategoryId(req.getCategory3());
-        if(category3==null){
-            Category category=new Category();
+        Category category3 = categoryRepository.findByCategoryId(req.getCategory3());
+        if (category3 == null) {
+            Category category = new Category();
             category.setCategoryId(req.getCategory3());
             category.setLevel(3);
             category.setParentCategory(category2);
-            category.setName(req.getCategory3().replace("_"," "));
-            category3=categoryRepository.save(category);
+            category.setName(req.getCategory3().replace("_", " "));
+            category3 = categoryRepository.save(category);
         }
-        
-        Product product=new Product();
+
+        Product product = new Product();
 
         product.setSeller(seller);
         product.setCategory(category3);
@@ -98,7 +94,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void deleteProduct(Long productId) throws ProductException {
-        Product product=findProductById(productId);
+        Product product = findProductById(productId);
         productRepository.delete(product);
 
     }
@@ -121,7 +117,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product findProductById(Long id) throws ProductException {
         return productRepository.findById(id)
-                .orElseThrow(()-> new ProductException("product not found"));
+                .orElseThrow(() -> new ProductException("product not found"));
     }
 
     @Override
@@ -131,35 +127,32 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Page<Product> getAllProduct(String category,
-                                       String brand,
-                                       String color,
-                                       String size,
-                                       Integer minPrice,
-                                       Integer maxPrice,
-                                       Integer minDiscount,
-                                       String sort,
-                                       String stock,
-                                       Integer pageNumber) {
+            String brand,
+            String color,
+            String size,
+            Integer minPrice,
+            Integer maxPrice,
+            Integer minDiscount,
+            String sort,
+            String stock,
+            Integer pageNumber) {
         Specification<Product> spec = (root, query, criteriaBuilder) -> {
             List<Predicate> predicates = new ArrayList<>();
-
 
             if (category != null) {
                 Join<Product, Category> categoryJoin = root.join("category");
 //                predicates.add(criteriaBuilder.equal(categoryJoin.get("categoryId"), category));
 //                predicates.add(criteriaBuilder.equal(categoryJoin.get("parentCategory").get("categoryId"), category));
                 Predicate categoryPredicate = criteriaBuilder.or(
-                        criteriaBuilder.equal(categoryJoin.get("categoryId"), category),  // Match categoryId
-                        criteriaBuilder.equal(categoryJoin.get("parentCategory").get("categoryId"), category)  // Match parentCategory.categoryId
+                        criteriaBuilder.equal(categoryJoin.get("categoryId"), category), // Match categoryId
+                        criteriaBuilder.equal(categoryJoin.get("parentCategory").get("categoryId"), category) // Match parentCategory.categoryId
                 );
-
 
                 predicates.add(categoryPredicate);
             }
 
-
             if (color != null && !color.isEmpty()) {
-                System.out.println("color "+color);
+                System.out.println("color " + color);
                 predicates.add(criteriaBuilder.equal(root.get("color"), color));
             }
 
@@ -193,15 +186,15 @@ public class ProductServiceImpl implements ProductService {
         if (sort != null && !sort.isEmpty()) {
             pageable = switch (sort) {
                 case "price_low" ->
-                        PageRequest.of(pageNumber != null ? pageNumber : 0, 10, Sort.by("sellingPrice").ascending());
+                    PageRequest.of(pageNumber != null ? pageNumber : 0, 10, Sort.by("sellingPrice").ascending());
                 case "price_high" ->
-                        PageRequest.of(pageNumber != null ? pageNumber : 0, 10, Sort.by("sellingPrice").descending());
-                default -> PageRequest.of(pageNumber != null ? pageNumber : 0, 10, Sort.unsorted());
+                    PageRequest.of(pageNumber != null ? pageNumber : 0, 10, Sort.by("sellingPrice").descending());
+                default ->
+                    PageRequest.of(pageNumber != null ? pageNumber : 0, 10, Sort.unsorted());
             };
         } else {
             pageable = PageRequest.of(pageNumber != null ? pageNumber : 0, 10, Sort.unsorted());
         }
-
 
         return productRepository.findAll(spec, pageable);
     }

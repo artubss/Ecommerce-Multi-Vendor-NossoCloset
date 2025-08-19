@@ -1,7 +1,7 @@
-package com.nossocloset.controller;
+package com.zosh.controller;
 
-import com.nossocloset.response.ApiResponse;
-import com.nossocloset.service.HomeService;
+import com.zosh.response.ApiResponse;
+import com.zosh.service.HomeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,13 +15,10 @@ public class HomeController {
     private final HomeService homeService;
 
     @GetMapping
-    public ResponseEntity<ApiResponse> home(){
+    public ResponseEntity<ApiResponse> home() {
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.setMessage("Ecommerce multi vendor system");
         return new ResponseEntity<>(apiResponse, HttpStatus.ACCEPTED);
     }
-
-
-
 
 }

@@ -1,8 +1,8 @@
-package com.nossocloset.controller;
+package com.zosh.controller;
 
-import com.nossocloset.exception.*;
-import com.nossocloset.model.*;
-import com.nossocloset.service.*;
+import com.zosh.exception.*;
+import com.zosh.model.*;
+import com.zosh.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -17,20 +17,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductController {
 
-
     private final ProductService productService;
 
     private final UserService userService;
 
     private final SellerService sellerService;
 
-
-
     @GetMapping("/{productId}")
     public ResponseEntity<Product> getProductById(@PathVariable Long productId) throws ProductException {
 
-            Product product = productService.findProductById(productId);
-            return new ResponseEntity<>(product, HttpStatus.OK);
+        Product product = productService.findProductById(productId);
+        return new ResponseEntity<>(product, HttpStatus.OK);
 
     }
 
@@ -42,18 +39,18 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<Page<Product>> getAllProducts(@RequestParam(required = false) String category,
-                                                        @RequestParam(required = false) String brand,
-                                                        @RequestParam(required = false) String color,
-                                                        @RequestParam(required = false) String size,
-                                                        @RequestParam(required = false) Integer minPrice,
-                                                        @RequestParam(required = false) Integer maxPrice,
-                                                        @RequestParam(required = false) Integer minDiscount,
-                                                        @RequestParam(required = false) String sort,
-                                                        @RequestParam(required = false) String stock,
-                                                        @RequestParam(defaultValue = "0") Integer pageNumber) {
-        System.out.println("color p -------- "+pageNumber);
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String color,
+            @RequestParam(required = false) String size,
+            @RequestParam(required = false) Integer minPrice,
+            @RequestParam(required = false) Integer maxPrice,
+            @RequestParam(required = false) Integer minDiscount,
+            @RequestParam(required = false) String sort,
+            @RequestParam(required = false) String stock,
+            @RequestParam(defaultValue = "0") Integer pageNumber) {
+        System.out.println("color p -------- " + pageNumber);
         return new ResponseEntity<>(
-                productService.getAllProduct(category,brand,
+                productService.getAllProduct(category, brand,
                         color, size, minPrice,
                         maxPrice, minDiscount, sort,
                         stock, pageNumber), HttpStatus.OK);

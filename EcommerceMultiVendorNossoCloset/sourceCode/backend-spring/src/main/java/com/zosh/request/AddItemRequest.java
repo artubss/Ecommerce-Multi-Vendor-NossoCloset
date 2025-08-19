@@ -1,4 +1,4 @@
-package com.nossocloset.request;
+package com.zosh.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,11 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AddItemRequest {
 
-	private Long productId;
-	private String size;
-	private int quantity;
-	private Integer price;
-	
+    private Long productId;
+    private String size;
+    private int quantity;
+    private Integer price;
 
-	
 }

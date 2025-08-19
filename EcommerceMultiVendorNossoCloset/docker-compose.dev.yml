@@ -1,0 +1,206 @@
+# ===== DOCKER-COMPOSE PARA DESENVOLVIMENTO - FASE 1 =====
+# Nosso Closet - Sistema de Pedidos Personalizados
+
+version: "3.8"
+
+services:
+  # ===== BANCO DE DADOS =====
+  postgres:
+    image: postgres:15-alpine
+    container_name: nosso_closet_postgres
+    environment:
+      POSTGRES_DB: nosso_closet_dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --lc-collate=C --lc-ctype=C"
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/init:/docker-entrypoint-initdb.d
+    networks:
+      - nosso_closet_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d nosso_closet_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ===== CACHE REDIS =====
+  redis:
+    image: redis:7-alpine
+    container_name: nosso_closet_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - nosso_closet_network
+    command: redis-server --appendonly yes --maxmemory 256mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ===== FILA DE MENSAGENS =====
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: nosso_closet_rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: password
+      RABBITMQ_DEFAULT_VHOST: /
+      RABBITMQ_ERLANG_COOKIE: SWQOKODSQALRPCLNMEQG
+    ports:
+      - "5672:5672" # AMQP
+      - "15672:15672" # Management UI
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+      - ./rabbitmq/definitions.json:/etc/rabbitmq/definitions.json:ro
+    networks:
+      - nosso_closet_network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ===== BACKEND SPRING BOOT =====
+  backend:
+    build:
+      context: ./sourceCode/backend-spring
+      dockerfile: Dockerfile.dev
+    container_name: nosso_closet_backend
+    ports:
+      - "5454:5454"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: nosso_closet_dev
+      DB_USERNAME: postgres
+      DB_PASSWORD: password
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: admin
+      RABBITMQ_PASSWORD: password
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID:test-key}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY:test-secret}
+      AWS_S3_ENDPOINT: ${AWS_S3_ENDPOINT:}
+      JWT_SECRET: ${JWT_SECRET:nosso-closet-jwt-secret-key-2024-dev}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    volumes:
+      - ./sourceCode/backend-spring:/app
+      - /app/target
+      - ./logs:/app/logs
+    networks:
+      - nosso_closet_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5454/api/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # ===== FRONTEND REACT =====
+  frontend:
+    build:
+      context: ./sourceCode/frontend-vite
+      dockerfile: Dockerfile.dev
+    container_name: nosso_closet_frontend
+    ports:
+      - "3000:3000"
+    environment:
+      REACT_APP_API_URL: http://localhost:5454/api
+      REACT_APP_AWS_REGION: ${AWS_REGION:us-east-1}
+      REACT_APP_S3_BUCKET_NAME: ${S3_BUCKET_NAME:nosso-closet-dev}
+    volumes:
+      - ./sourceCode/frontend-vite:/app
+      - /app/node_modules
+    networks:
+      - nosso_closet_network
+    depends_on:
+      - backend
+
+  # ===== NGINX (PROXY REVERSO) =====
+  nginx:
+    image: nginx:alpine
+    container_name: nosso_closet_nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+    networks:
+      - nosso_closet_network
+    depends_on:
+      - backend
+      - frontend
+
+  # ===== PROMETHEUS (MONITORAMENTO) =====
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: nosso_closet_prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus_data:/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--storage.tsdb.path=/prometheus"
+      - "--web.console.libraries=/etc/prometheus/console_libraries"
+      - "--web.console.templates=/etc/prometheus/consoles"
+      - "--storage.tsdb.retention.time=200h"
+      - "--web.enable-lifecycle"
+    networks:
+      - nosso_closet_network
+
+  # ===== GRAFANA (VISUALIZAÇÃO) =====
+  grafana:
+    image: grafana/grafana:latest
+    container_name: nosso_closet_grafana
+    ports:
+      - "3001:3000"
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: admin
+      GF_USERS_ALLOW_SIGN_UP: false
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./monitoring/grafana/datasources:/etc/grafana/provisioning/datasources:ro
+    networks:
+      - nosso_closet_network
+    depends_on:
+      - prometheus
+
+# ===== VOLUMES =====
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  rabbitmq_data:
+    driver: local
+  prometheus_data:
+    driver: local
+  grafana_data:
+    driver: local
+
+# ===== NETWORKS =====
+networks:
+  nosso_closet_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

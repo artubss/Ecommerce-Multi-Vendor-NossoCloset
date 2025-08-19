@@ -3,246 +3,245 @@ export const mainCategory = [
     name: "Masculino",
     categoryId: "masculino",
     level: 1,
-    levelTwoCategory:[
-        {
-            "name": "Camisetas",
-            "categoryId": "masculino_camisetas",
-            "parentCategoryId":"masculino",
-            "level":2
-        },
-        {
-            "name": "Camisas",
-            "categoryId": "masculino_camisas",
-            "parentCategoryId":"masculino",
-            "level":2
-        },
-        {
-            "name": "Calças",
-            "categoryId": "masculino_calcas",
-            "parentCategoryId":"masculino",
-            "level":2
-        },
-        {
-            "name": "Bermudas",
-            "categoryId": "masculino_bermudas",
-            "parentCategoryId":"masculino",
-            "level":2
-        },
-        {
-            "name": "Jaquetas",
-            "categoryId": "masculino_jaquetas",
-            "parentCategoryId":"masculino",
-            "level":2
-        },
-        {
-            "name": "Casacos",
-            "categoryId": "masculino_casacos",
-            "parentCategoryId":"masculino",
-            "level":2
-        },
-        {
-            "name": "Roupas Íntimas",
-            "categoryId": "masculino_roupas_intimas",
-            "parentCategoryId":"masculino",
-            "level":2
-        },
-        {
-            "name": "Calçados",
-            "categoryId": "masculino_calcados",
-            "parentCategoryId":"masculino",
-            "level":2
-        },
-        {
-            "name": "Acessórios",
-            "categoryId": "masculino_acessorios",
-            "parentCategoryId":"masculino",
-            "level":2
-        }
-    ]
+    levelTwoCategory: [
+      {
+        name: "Camisetas",
+        categoryId: "masculino_camisetas",
+        parentCategoryId: "masculino",
+        level: 2,
+      },
+      {
+        name: "Camisas",
+        categoryId: "masculino_camisas",
+        parentCategoryId: "masculino",
+        level: 2,
+      },
+      {
+        name: "Calças",
+        categoryId: "masculino_calcas",
+        parentCategoryId: "masculino",
+        level: 2,
+      },
+      {
+        name: "Bermudas",
+        categoryId: "masculino_bermudas",
+        parentCategoryId: "masculino",
+        level: 2,
+      },
+      {
+        name: "Jaquetas",
+        categoryId: "masculino_jaquetas",
+        parentCategoryId: "masculino",
+        level: 2,
+      },
+      {
+        name: "Casacos",
+        categoryId: "masculino_casacos",
+        parentCategoryId: "masculino",
+        level: 2,
+      },
+      {
+        name: "Roupas Íntimas",
+        categoryId: "masculino_roupas_intimas",
+        parentCategoryId: "masculino",
+        level: 2,
+      },
+      {
+        name: "Calçados",
+        categoryId: "masculino_calcados",
+        parentCategoryId: "masculino",
+        level: 2,
+      },
+      {
+        name: "Acessórios",
+        categoryId: "masculino_acessorios",
+        parentCategoryId: "masculino",
+        level: 2,
+      },
+    ],
   },
   {
     name: "Feminino",
     categoryId: "feminino",
     level: 1,
-    levelTwoCategory:[
-        {
-          "parentCategoryId":"feminino",
-          "level":2,
-          "name":"Vestidos",
-          "categoryId": "feminino_vestidos"
-        },
-        {
-          "parentCategoryId":"feminino",
-          "level":2,
-          "name":"Blusas",
-          "categoryId": "feminino_blusas"
-        },
-        {
-          "parentCategoryId":"feminino",
-          "level":2,
-          "name":"Calças",
-          "categoryId": "feminino_calcas"
-        },
-        {
-          "parentCategoryId":"feminino",
-          "level":2,
-          "name":"Saias",
-          "categoryId": "feminino_saias"
-        },
-        {
-          "parentCategoryId":"feminino",
-          "level":2,
-          "name":"Jaquetas",
-          "categoryId": "feminino_jaquetas"
-        },
-        {
-          "parentCategoryId":"feminino",
-          "level":2,
-          "name":"Casacos",
-          "categoryId": "feminino_casacos"
-        },
-        {
-          "parentCategoryId":"feminino",
-          "level":2,
-          "name":"Roupas Íntimas",
-          "categoryId": "feminino_roupas_intimas"
-        },
-        {
-          "parentCategoryId":"feminino",
-          "level":2,
-          "name":"Calçados",
-          "categoryId": "feminino_calcados"
-        },
-        {
-          "parentCategoryId":"feminino",
-          "level":2,
-          "name":"Acessórios",
-          "categoryId": "feminino_acessorios"
-        },
-        {
-          "parentCategoryId":"feminino",
-          "level":2,
-          "name":"Bolsas",
-          "categoryId": "feminino_bolsas"
-        }
-      ]
-      
+    levelTwoCategory: [
+      {
+        parentCategoryId: "feminino",
+        level: 2,
+        name: "Vestidos",
+        categoryId: "feminino_vestidos",
+      },
+      {
+        parentCategoryId: "feminino",
+        level: 2,
+        name: "Blusas",
+        categoryId: "feminino_blusas",
+      },
+      {
+        parentCategoryId: "feminino",
+        level: 2,
+        name: "Calças",
+        categoryId: "feminino_calcas",
+      },
+      {
+        parentCategoryId: "feminino",
+        level: 2,
+        name: "Saias",
+        categoryId: "feminino_saias",
+      },
+      {
+        parentCategoryId: "feminino",
+        level: 2,
+        name: "Jaquetas",
+        categoryId: "feminino_jaquetas",
+      },
+      {
+        parentCategoryId: "feminino",
+        level: 2,
+        name: "Casacos",
+        categoryId: "feminino_casacos",
+      },
+      {
+        parentCategoryId: "feminino",
+        level: 2,
+        name: "Roupas Íntimas",
+        categoryId: "feminino_roupas_intimas",
+      },
+      {
+        parentCategoryId: "feminino",
+        level: 2,
+        name: "Calçados",
+        categoryId: "feminino_calcados",
+      },
+      {
+        parentCategoryId: "feminino",
+        level: 2,
+        name: "Acessórios",
+        categoryId: "feminino_acessorios",
+      },
+      {
+        parentCategoryId: "feminino",
+        level: 2,
+        name: "Bolsas",
+        categoryId: "feminino_bolsas",
+      },
+    ],
   },
   {
     name: "Infantil",
     categoryId: "infantil",
     level: 1,
-    levelTwoCategory:[
-        {
-            "name": "Meninos (2-12 anos)",
-            "categoryId": "infantil_meninos",
-            "parentCategoryId":"infantil",
-            "level":2
-        },
-        {
-            "name": "Meninas (2-12 anos)",
-            "categoryId": "infantil_meninas",
-            "parentCategoryId":"infantil",
-            "level":2
-        },
-        {
-            "name": "Bebês (0-2 anos)",
-            "categoryId": "infantil_bebes",
-            "parentCategoryId":"infantil",
-            "level":2
-        },
-        {
-            "name": "Calçados Infantis",
-            "categoryId": "infantil_calcados",
-            "parentCategoryId":"infantil",
-            "level":2
-        },
-        {
-            "name": "Acessórios Infantis",
-            "categoryId": "infantil_acessorios",
-            "parentCategoryId":"infantil",
-            "level":2
-        }
-    ]
+    levelTwoCategory: [
+      {
+        name: "Meninos (2-12 anos)",
+        categoryId: "infantil_meninos",
+        parentCategoryId: "infantil",
+        level: 2,
+      },
+      {
+        name: "Meninas (2-12 anos)",
+        categoryId: "infantil_meninas",
+        parentCategoryId: "infantil",
+        level: 2,
+      },
+      {
+        name: "Bebês (0-2 anos)",
+        categoryId: "infantil_bebes",
+        parentCategoryId: "infantil",
+        level: 2,
+      },
+      {
+        name: "Calçados Infantis",
+        categoryId: "infantil_calcados",
+        parentCategoryId: "infantil",
+        level: 2,
+      },
+      {
+        name: "Acessórios Infantis",
+        categoryId: "infantil_acessorios",
+        parentCategoryId: "infantil",
+        level: 2,
+      },
+    ],
   },
   {
     name: "Academia & Esporte",
     categoryId: "academia_esporte",
     level: 1,
-    levelTwoCategory:[
-        {
-            "name": "Roupas de Academia",
-            "categoryId": "academia_roupas",
-            "parentCategoryId":"academia_esporte",
-            "level":2
-        },
-        {
-            "name": "Roupas de Corrida",
-            "categoryId": "academia_corrida",
-            "parentCategoryId":"academia_esporte",
-            "level":2
-        },
-        {
-            "name": "Roupas de Yoga",
-            "categoryId": "academia_yoga",
-            "parentCategoryId":"academia_esporte",
-            "level":2
-        },
-        {
-            "name": "Calçados Esportivos",
-            "categoryId": "academia_calcados",
-            "parentCategoryId":"academia_esporte",
-            "level":2
-        },
-        {
-            "name": "Equipamentos",
-            "categoryId": "academia_equipamentos",
-            "parentCategoryId":"academia_esporte",
-            "level":2
-        }
-    ]
+    levelTwoCategory: [
+      {
+        name: "Roupas de Academia",
+        categoryId: "academia_roupas",
+        parentCategoryId: "academia_esporte",
+        level: 2,
+      },
+      {
+        name: "Roupas de Corrida",
+        categoryId: "academia_corrida",
+        parentCategoryId: "academia_esporte",
+        level: 2,
+      },
+      {
+        name: "Roupas de Yoga",
+        categoryId: "academia_yoga",
+        parentCategoryId: "academia_esporte",
+        level: 2,
+      },
+      {
+        name: "Calçados Esportivos",
+        categoryId: "academia_calcados",
+        parentCategoryId: "academia_esporte",
+        level: 2,
+      },
+      {
+        name: "Equipamentos",
+        categoryId: "academia_equipamentos",
+        parentCategoryId: "academia_esporte",
+        level: 2,
+      },
+    ],
   },
   {
     name: "Acessórios",
     categoryId: "acessorios",
     level: 1,
-    levelTwoCategory:[
-        {
-            "name": "Bolsas",
-            "categoryId": "acessorios_bolsas",
-            "parentCategoryId":"acessorios",
-            "level":2
-        },
-        {
-            "name": "Cintos",
-            "categoryId": "acessorios_cintos",
-            "parentCategoryId":"acessorios",
-            "level":2
-        },
-        {
-            "name": "Joias",
-            "categoryId": "acessorios_joias",
-            "parentCategoryId":"acessorios",
-            "level":2
-        },
-        {
-            "name": "Relógios",
-            "categoryId": "acessorios_relogios",
-            "parentCategoryId":"acessorios",
-            "level":2
-        },
-        {
-            "name": "Óculos",
-            "categoryId": "acessorios_oculos",
-            "parentCategoryId":"acessorios",
-            "level":2
-        },
-        {
-            "name": "Lenços e Cachecóis",
-            "categoryId": "acessorios_lenços_cachecois",
-            "parentCategoryId":"acessorios",
-            "level":2
-        }
-    ]
-  }
+    levelTwoCategory: [
+      {
+        name: "Bolsas",
+        categoryId: "acessorios_bolsas",
+        parentCategoryId: "acessorios",
+        level: 2,
+      },
+      {
+        name: "Cintos",
+        categoryId: "acessorios_cintos",
+        parentCategoryId: "acessorios",
+        level: 2,
+      },
+      {
+        name: "Joias",
+        categoryId: "acessorios_joias",
+        parentCategoryId: "acessorios",
+        level: 2,
+      },
+      {
+        name: "Relógios",
+        categoryId: "acessorios_relogios",
+        parentCategoryId: "acessorios",
+        level: 2,
+      },
+      {
+        name: "Óculos",
+        categoryId: "acessorios_oculos",
+        parentCategoryId: "acessorios",
+        level: 2,
+      },
+      {
+        name: "Lenços e Cachecóis",
+        categoryId: "acessorios_lenços_cachecois",
+        parentCategoryId: "acessorios",
+        level: 2,
+      },
+    ],
+  },
 ];

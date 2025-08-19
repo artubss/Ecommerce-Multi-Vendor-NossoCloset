@@ -1,9 +1,9 @@
-package com.nossocloset.ai.services;
+package com.zosh.ai.services;
 
-import com.nossocloset.exception.ProductException;
-import com.nossocloset.response.ApiResponse;
+import com.zosh.exception.ProductException;
+import com.zosh.response.ApiResponse;
 
 public interface AiChatBotService {
 
-    ApiResponse aiChatBot(String prompt,Long productId,Long userId) throws ProductException;
+    ApiResponse aiChatBot(String prompt, Long productId, Long userId) throws ProductException;
 }

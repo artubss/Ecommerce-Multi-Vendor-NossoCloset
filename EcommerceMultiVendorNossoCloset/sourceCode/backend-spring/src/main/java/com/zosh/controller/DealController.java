@@ -1,8 +1,8 @@
-package com.nossocloset.controller;
+package com.zosh.controller;
 
-import com.nossocloset.model.Deal;
-import com.nossocloset.response.ApiResponse;
-import com.nossocloset.service.DealService;
+import com.zosh.model.Deal;
+import com.zosh.response.ApiResponse;
+import com.zosh.service.DealService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,22 +14,21 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/admin/deals")
 public class DealController {
+
     private final DealService dealService;
 
     @PostMapping
     public ResponseEntity<Deal> createDeals(
             @RequestBody Deal deals
-    ){
-        Deal createdDeals=dealService.createDeal(deals);
+    ) {
+        Deal createdDeals = dealService.createDeal(deals);
 
         return new ResponseEntity<>(createdDeals, HttpStatus.ACCEPTED);
     }
 
     @GetMapping
-    public ResponseEntity<List<Deal>> getDeals(
-
-    ){
-        List<Deal> deals=dealService.getDeals();
+    public ResponseEntity<List<Deal>> getDeals() {
+        List<Deal> deals = dealService.getDeals();
 
         return new ResponseEntity<>(deals, HttpStatus.ACCEPTED);
     }
@@ -39,7 +38,7 @@ public class DealController {
             @PathVariable Long id,
             @RequestBody Deal deal) throws Exception {
 
-        Deal updatedDeal=dealService.updateDeal(deal,id);
+        Deal updatedDeal = dealService.updateDeal(deal, id);
         return ResponseEntity.ok(updatedDeal);
 
     }
@@ -50,12 +49,10 @@ public class DealController {
     ) throws Exception {
         dealService.deleteDeal(id);
 
-        ApiResponse apiResponse=new ApiResponse();
+        ApiResponse apiResponse = new ApiResponse();
         apiResponse.setMessage("Deal deleted");
 
         return new ResponseEntity<>(apiResponse, HttpStatus.ACCEPTED);
     }
-
-
 
 }

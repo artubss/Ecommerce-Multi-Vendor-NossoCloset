@@ -1,4 +1,4 @@
-package com.nossocloset.domain;
+package com.zosh.domain;
 
 public enum OrderStatus {
     PENDING,

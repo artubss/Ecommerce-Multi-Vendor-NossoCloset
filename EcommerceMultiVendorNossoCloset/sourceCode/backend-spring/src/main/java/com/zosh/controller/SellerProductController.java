@@ -1,15 +1,15 @@
-package com.nossocloset.controller;
+package com.zosh.controller;
 
-import com.nossocloset.exception.CategoryNotFoundException;
-import com.nossocloset.exception.ProductException;
-import com.nossocloset.exception.SellerException;
-import com.nossocloset.exception.UserException;
-import com.nossocloset.model.Product;
-import com.nossocloset.model.Seller;
-import com.nossocloset.request.CreateProductRequest;
-import com.nossocloset.service.ProductService;
-import com.nossocloset.service.SellerService;
-import com.nossocloset.service.UserService;
+import com.zosh.exception.CategoryNotFoundException;
+import com.zosh.exception.ProductException;
+import com.zosh.exception.SellerException;
+import com.zosh.exception.UserException;
+import com.zosh.model.Product;
+import com.zosh.model.Seller;
+import com.zosh.request.CreateProductRequest;
+import com.zosh.service.ProductService;
+import com.zosh.service.SellerService;
+import com.zosh.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,12 +27,11 @@ public class SellerProductController {
     private final SellerService sellerService;
     private final UserService userService;
 
-
     @GetMapping()
     public ResponseEntity<List<Product>> getProductBySellerId(
             @RequestHeader("Authorization") String jwt) throws ProductException, SellerException {
 
-        Seller seller=sellerService.getSellerProfile(jwt);
+        Seller seller = sellerService.getSellerProfile(jwt);
 
         List<Product> products = productService.getProductBySellerId(seller.getId());
         return new ResponseEntity<>(products, HttpStatus.OK);
@@ -42,12 +41,11 @@ public class SellerProductController {
     @PostMapping()
     public ResponseEntity<Product> createProduct(
             @RequestBody CreateProductRequest request,
-
-            @RequestHeader("Authorization")String jwt)
+            @RequestHeader("Authorization") String jwt)
             throws UserException,
             ProductException, CategoryNotFoundException, SellerException {
 
-        Seller seller=sellerService.getSellerProfile(jwt);
+        Seller seller = sellerService.getSellerProfile(jwt);
 
         Product product = productService.createProduct(request, seller);
         return new ResponseEntity<>(product, HttpStatus.CREATED);
@@ -83,6 +81,5 @@ public class SellerProductController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-
 
 }

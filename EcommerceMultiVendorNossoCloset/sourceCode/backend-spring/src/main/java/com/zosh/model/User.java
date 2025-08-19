@@ -1,8 +1,8 @@
-package com.nossocloset.model;
+package com.zosh.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.nossocloset.domain.USER_ROLE;
+import com.zosh.domain.USER_ROLE;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -10,8 +10,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Table(name = "app_users") // Renomeando para evitar conflito com palavra reservada 'user'
 @Data
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -28,10 +30,11 @@ public class User {
 
     private String mobile;
 
+    @Column(columnDefinition = "SMALLINT")
     private USER_ROLE role;
 
     @OneToMany
-    private Set<Address> addresses=new HashSet<>();
+    private Set<Address> addresses = new HashSet<>();
 
     @JsonIgnore
     @ManyToMany
@@ -39,6 +42,6 @@ public class User {
             name = "user_coupons",
             inverseJoinColumns = @JoinColumn(name = "coupon_id")
     )
-    private Set<Coupon> usedCoupons=new HashSet<>();
+    private Set<Coupon> usedCoupons = new HashSet<>();
 
 }

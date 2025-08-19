@@ -1,12 +1,12 @@
-package com.nossocloset.service.impl;
+package com.zosh.service.impl;
 
-import com.nossocloset.exception.ReviewNotFoundException;
-import com.nossocloset.model.Product;
-import com.nossocloset.model.Review;
-import com.nossocloset.model.User;
-import com.nossocloset.repository.ReviewRepository;
-import com.nossocloset.request.CreateReviewRequest;
-import com.nossocloset.service.ReviewService;
+import com.zosh.exception.ReviewNotFoundException;
+import com.zosh.model.Product;
+import com.zosh.model.Review;
+import com.zosh.model.User;
+import com.zosh.repository.ReviewRepository;
+import com.zosh.request.CreateReviewRequest;
+import com.zosh.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +19,10 @@ public class ReviewServiceImpl implements ReviewService {
 
     private final ReviewRepository reviewRepository;
 
-
     @Override
     public Review createReview(CreateReviewRequest req,
-                               User user,
-                               Product product) {
+            User user,
+            Product product) {
         Review newReview = new Review();
 
         newReview.setReviewText(req.getReviewText());
@@ -42,16 +41,15 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewRepository.findReviewsByProductId(productId);
     }
 
-
     @Override
     public Review updateReview(Long reviewId,
-                               String reviewText,
-                               double rating,
-                               Long userId) throws ReviewNotFoundException, AuthenticationException {
-        Review review=reviewRepository.findById(reviewId)
-                .orElseThrow(()-> new ReviewNotFoundException("Review Not found"));
+            String reviewText,
+            double rating,
+            Long userId) throws ReviewNotFoundException, AuthenticationException {
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new ReviewNotFoundException("Review Not found"));
 
-        if(review.getUser().getId()!=userId){
+        if (review.getUser().getId() != userId) {
             throw new AuthenticationException("You do not have permission to delete this review");
         }
 
@@ -61,11 +59,11 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public void deleteReview(Long reviewId,Long userId) throws ReviewNotFoundException,
+    public void deleteReview(Long reviewId, Long userId) throws ReviewNotFoundException,
             AuthenticationException {
-        Review review=reviewRepository.findById(reviewId)
-                .orElseThrow(()-> new ReviewNotFoundException("Review Not found"));
-        if(review.getUser().getId()!=userId){
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new ReviewNotFoundException("Review Not found"));
+        if (review.getUser().getId() != userId) {
             throw new AuthenticationException("You do not have permission to delete this review");
         }
         reviewRepository.delete(review);

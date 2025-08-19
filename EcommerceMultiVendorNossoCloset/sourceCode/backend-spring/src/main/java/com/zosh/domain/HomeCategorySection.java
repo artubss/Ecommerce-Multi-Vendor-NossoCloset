@@ -1,8 +1,9 @@
-package com.nossocloset.domain;
+package com.zosh.domain;
 
 public enum HomeCategorySection {
-    ELECTRIC_CATEGORIES,
-    GRID,
+    DESTAQUES,
     SHOP_BY_CATEGORIES,
-    DEALS
+    GRID,
+    DEALS,
+    ELECTRIC_CATEGORIES
 }

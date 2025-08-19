@@ -1,4 +1,4 @@
-package com.nossocloset.dto;
+package com.zosh.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.GeneratedValue;

@@ -1,11 +1,11 @@
-package com.nossocloset.service.impl;
+package com.zosh.service.impl;
 
-import com.nossocloset.model.Order;
-import com.nossocloset.model.Seller;
-import com.nossocloset.model.Transaction;
-import com.nossocloset.repository.SellerRepository;
-import com.nossocloset.repository.TransactionRepository;
-import com.nossocloset.service.TransactionService;
+import com.zosh.model.Order;
+import com.zosh.model.Seller;
+import com.zosh.model.Transaction;
+import com.zosh.repository.SellerRepository;
+import com.zosh.repository.TransactionRepository;
+import com.zosh.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +19,7 @@ public class TransactionServiceImpl implements TransactionService {
 
     @Autowired
     public TransactionServiceImpl(TransactionRepository transactionRepository,
-                                  SellerRepository sellerRepository
+            SellerRepository sellerRepository
     ) {
         this.transactionRepository = transactionRepository;
         this.sellerRepository = sellerRepository;

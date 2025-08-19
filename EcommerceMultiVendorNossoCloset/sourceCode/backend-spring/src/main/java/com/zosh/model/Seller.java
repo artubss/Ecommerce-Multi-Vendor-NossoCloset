@@ -1,12 +1,11 @@
-package com.nossocloset.model;
+package com.zosh.model;
 
-import com.nossocloset.domain.AccountStatus;
-import com.nossocloset.domain.USER_ROLE;
+import com.zosh.domain.AccountStatus;
+import com.zosh.domain.USER_ROLE;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 
 @Entity
 @Data
@@ -32,15 +31,16 @@ public class Seller {
     private BankDetails bankDetails = new BankDetails();
 
     @OneToOne(cascade = CascadeType.ALL)
-    private Address pickupAddress=new Address();
+    private Address pickupAddress = new Address();
 
     private String GSTIN;
 
+    @Column(columnDefinition = "SMALLINT")
     private USER_ROLE role;
 
-    private  boolean isEmailVerified=false;
+    private boolean isEmailVerified = false;
 
+    @Column(columnDefinition = "SMALLINT")
     private AccountStatus accountStatus = AccountStatus.PENDING_VERIFICATION;
-
 
 }

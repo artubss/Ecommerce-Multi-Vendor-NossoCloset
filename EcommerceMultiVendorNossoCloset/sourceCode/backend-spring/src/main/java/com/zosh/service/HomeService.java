@@ -1,7 +1,7 @@
-package com.nossocloset.service;
+package com.zosh.service;
 
-import com.nossocloset.model.Home;
-import com.nossocloset.model.HomeCategory;
+import com.zosh.model.Home;
+import com.zosh.model.HomeCategory;
 
 import java.util.List;
 

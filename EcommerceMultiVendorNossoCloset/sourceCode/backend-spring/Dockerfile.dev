@@ -1,0 +1,44 @@
+# ===== DOCKERFILE PARA DESENVOLVIMENTO - BACKEND SPRING BOOT =====
+# Fase 1 - Semana 1: Setup de Infraestrutura
+
+FROM openjdk:17-jdk-slim
+
+# Metadados
+LABEL maintainer="Nosso Closet Dev Team"
+LABEL version="1.0.0"
+LABEL description="Backend Spring Boot para desenvolvimento - Nosso Closet"
+
+# Variáveis de ambiente
+ENV JAVA_OPTS="-Xmx2g -Xms1g -XX:+UseG1GC -XX:+UseStringDeduplication"
+ENV SPRING_PROFILES_ACTIVE=docker
+ENV SERVER_PORT=5454
+
+# Instalar dependências necessárias
+RUN apt-get update && apt-get install -y \
+    curl \
+    wget \
+    vim \
+    && rm -rf /var/lib/apt/lists/*
+
+# Criar diretório de trabalho
+WORKDIR /app
+
+# Copiar arquivo Maven Wrapper (se existir)
+COPY .mvn/ .mvn/
+COPY mvnw mvnw
+COPY mvnw.cmd mvnw.cmd
+
+# Copiar arquivos de configuração Maven
+COPY pom.xml pom.xml
+
+# Baixar dependências Maven (cache layer)
+RUN ./mvnw dependency:go-offline -B
+
+# Copiar código fonte
+COPY src/ src/
+
+# Expor porta
+EXPOSE 5454
+
+# Comando para desenvolvimento (hot reload)
+CMD ["./mvnw", "spring-boot:run", "-Dspring-boot.run.jvmArguments='${JAVA_OPTS}'", "-Dspring-boot.run.profiles=docker"]

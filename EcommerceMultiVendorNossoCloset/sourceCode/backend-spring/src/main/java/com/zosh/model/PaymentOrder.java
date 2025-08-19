@@ -1,7 +1,7 @@
-package com.nossocloset.model;
+package com.zosh.model;
 
-import com.nossocloset.domain.PaymentMethod;
-import com.nossocloset.domain.PaymentOrderStatus;
+import com.zosh.domain.PaymentMethod;
+import com.zosh.domain.PaymentOrderStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,12 +22,13 @@ public class PaymentOrder {
 
     private Long amount;
 
+    @Column(columnDefinition = "SMALLINT")
     private PaymentOrderStatus status = PaymentOrderStatus.PENDING;
 
+    @Column(columnDefinition = "SMALLINT")
     private PaymentMethod paymentMethod;
 
     private String paymentLinkId;
-
 
     @ManyToOne
     private User user;

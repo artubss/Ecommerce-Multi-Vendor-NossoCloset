@@ -1,12 +1,12 @@
-package com.nossocloset.mapper;
+package com.zosh.mapper;
 
-import com.nossocloset.domain.OrderStatus;
-import com.nossocloset.dto.OrderDto;
-import com.nossocloset.dto.OrderHistory;
-import com.nossocloset.dto.OrderItemDto;
-import com.nossocloset.model.Order;
-import com.nossocloset.model.OrderItem;
-import com.nossocloset.model.User;
+import com.zosh.domain.OrderStatus;
+import com.zosh.dto.OrderDto;
+import com.zosh.dto.OrderHistory;
+import com.zosh.dto.OrderItemDto;
+import com.zosh.model.Order;
+import com.zosh.model.OrderItem;
+import com.zosh.model.User;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -135,9 +135,7 @@ public class OrderMapper {
                 .count();
         orderHistory.setCompletedOrders(completedOrders);
 
-
         return orderHistory;
     }
-
 
 }

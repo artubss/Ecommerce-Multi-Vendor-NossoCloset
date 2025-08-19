@@ -1,4 +1,4 @@
-package com.nossocloset.dto;
+package com.zosh.dto;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -33,6 +33,5 @@ public class ProductDto {
     private LocalDateTime createdAt;
 
     private String Sizes;
-
 
 }

@@ -1,9 +1,9 @@
-package com.nossocloset.exception;
+package com.zosh.exception;
 
 public class OrderException extends Exception {
-	
-	public OrderException(String message) {
-		super(message);
-	}
+
+    public OrderException(String message) {
+        super(message);
+    }
 
 }

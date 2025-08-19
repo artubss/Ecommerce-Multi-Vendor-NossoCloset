@@ -1,0 +1,452 @@
+# 🛍️ **PLANEJAMENTO COMPLETO - SISTEMA NOSSO CLOSET**
+
+## **ESPECIFICAÇÕES TÉCNICAS REFINADAS**
+
+### **Stack Tecnológica para Alta Escalabilidade**
+- **Backend**: Java 17+ ou 21 com Spring Boot 3.x
+- **Database**: PostgreSQL (produção) + H2 (testes)
+- **Cache**: Redis para sessões e dados frequentes
+- **ORM**: JPA/Hibernate com otimizações para 1400+ clientes
+- **Queue**: RabbitMQ para processamento assíncrono
+- **Storage**: goole drive API
+- **Frontend**: React.js OU VITE com Redux para gerenciamento de estado
+- **Mobile**: PWA responsivo para acesso mobile
+- **Notificações**: Twilio (WhatsApp) + JavaMailSender
+- **Monitoramento**: Actuator + Micrometer
+
+---
+
+## 📋 **REGRAS DE NEGÓCIO DETALHADAS - NOSSO CLOSET**
+
+### **1. MODELO OPERACIONAL ESPECÍFICO**
+
+#### **Fluxo Financeiro da Empresa**
+A **Nosso Closet** opera com **antecipação de pagamento**, onde:
+- Empresa identifica demanda através dos pedidos coletivos
+- **Administradores pagam fornecedores** imediatamente após confirmação do pedido
+- Produtos são solicitados aos fornecedores via WhatsApp ou sites
+- Clientes pagam **após** o pedido ser feito aos fornecedores
+- **Capital de giro próprio** é utilizado para viabilizar as compras
+- Margem de lucro vem das taxas administrativas aplicadas
+
+**Implementação**: Sistema deve ter controle rigoroso de **fluxo de caixa**, com dashboards mostrando valores antecipados por pedido, valores a receber de clientes, e margem real por operação.
+
+#### **Gestão de Múltiplos Operadores**
+Com **1400 clientes ativos**, o sistema deve suportar:
+- **Múltiplos administradores** simultâneos
+- **Controle de sessões** para evitar conflitos
+- **Auditoria completa** de todas as ações administrativas
+- **Permissões granulares** por funcionalidade
+- **Dashboard em tempo real** para monitoramento conjunto
+
+### **2. SISTEMA DE PEDIDOS PERSONALIZADOS**
+
+#### **Interface de Pedido do Cliente**
+O cliente deve poder fazer pedidos **detalhados** através da interface:
+
+**Campos Obrigatórios**:
+- **Upload de imagem** da peça desejada (print/foto)
+- **Referência da peça** (se disponível no site do fornecedor)
+- **Descrição detalhada** da peça
+- **Cor preferencial** (com opções de cores alternativas)
+- **Tamanho desejado** (com tabela de medidas)
+- **Categoria** (roupas femininas, masculinas, infantis, academia, acessórios, bolsas)
+- **Fornecedor preferencial** (se conhecido)
+- **Observações especiais**
+
+**Campos Opcionais**:
+- **Faixa de preço** aceitável
+- **Urgência** do pedido
+- **Quantidade** (se desejar mais de uma peça)
+
+**Implementação**: Criar interface intuitiva com **drag-and-drop** para imagens, **autocomplete** para referências, e **validação em tempo real** dos campos obrigatórios.
+
+### **3. GESTÃO DE VARIAÇÕES DE PRODUTOS**
+
+#### **Estrutura Hierárquica de Produtos**
+O sistema deve gerenciar **produtos complexos** com múltiplas variações:
+
+**Produto Base**:
+- Nome genérico (ex: "Vestido Longo Floral")
+- Categoria principal
+- Fornecedor
+- Imagens de referência
+- Descrição base
+
+**Variações do Produto**:
+- **Tamanhos**: PP, P, M, G, GG, XG, Plus Size
+- **Cores**: Sistema de cores com códigos HEX para precisão
+- **Modelos**: Diferentes versões do mesmo produto base
+- **Materiais**: Cotton, Poliéster, Elastano, etc.
+
+**Controle de Estoque por Variação**:
+- Estoque individual para cada combinação (Produto + Cor + Tamanho)
+- **Mínimo por fornecedor** calculado considerando todas as variações
+- Sistema de **substituição automática** (se cliente aceita cor similar)
+
+### **4. SISTEMA DE CRÉDITOS E REEMBOLSOS FLEXÍVEL**
+
+#### **Política de Cancelamento Personalizada**
+Quando pedido coletivo **não atinge mínimo**:
+
+**Opções para o Cliente**:
+1. **Reembolso total** via PIX/cartão (prazo: 5 dias úteis)
+2. **Crédito na plataforma** com **bônus de 5%** (incentivo para manter)
+3. **Transferência para próximo pedido** do mesmo fornecedor
+4. **Combinação**: parte reembolso + parte crédito
+
+**Implementação**: Sistema de **wallet interno** para cada cliente, com controle de créditos, histórico de transações, e opções de uso flexível. Dashboard administrativo para aprovar reembolsos caso a caso.
+
+#### **Sistema de Créditos Avançado**
+- **Créditos por indicação** de novos clientes
+- **Programa de fidelidade** baseado em volume de compras
+- **Créditos promocionais** para campanhas específicas
+- **Validade configurável** para diferentes tipos de crédito
+
+### **5. GESTÃO DE FORNECEDORES E COMUNICAÇÃO**
+
+#### **Perfil Detalhado de Fornecedores**
+Cada fornecedor deve ter:
+- **Dados básicos**: Nome, contato, WhatsApp, site
+- **Mínimo de pedido** em valor (R$) ou quantidade
+- **Tempo médio de entrega** (dias úteis)
+- **Categorias de produtos** que oferece
+- **Taxa administrativa** específica
+- **Histórico de performance** (pontualidade, qualidade)
+- **Status ativo/inativo**
+- **Observações operacionais**
+
+#### **Sistema de Comunicação Integrado**
+**Para Fornecedores**:
+- **Templates automáticos** para pedidos via WhatsApp
+- **Exportação de pedidos** em formato que o fornecedor prefere
+- **Controle de confirmação** de recebimento do pedido
+- **Sistema de follow-up** automático para prazos
+
+**Para Clientes**:
+- **Notificações em tempo real** sobre status do pedido
+- **Galeria de produtos** enviados pelo fornecedor
+- **Confirmação visual** antes da finalização da compra
+
+---
+
+## 🔄 **FLUXOS DE PROCESSO REFINADOS**
+
+### **Fluxo 1: Pedido Personalizado Completo**
+
+**Etapa 1: Solicitação do Cliente**
+Cliente acessa plataforma → Seleciona "Fazer Pedido Personalizado" → Upload da imagem da peça → Preenche formulário detalhado (referência, cor, tamanho, categoria) → Sistema valida dados obrigatórios → Pedido entra na **fila de análise**
+
+**Etapa 2: Análise Administrativa**
+Administrador visualiza pedido na **fila de análise** → Identifica fornecedor adequado → Pesquisa preço e disponibilidade → Define **preço final** com taxa administrativa → Adiciona produto ao **pedido coletivo ativo** do fornecedor → Notifica cliente sobre **preço e prazo**
+
+**Etapa 3: Confirmação e Agrupamento**
+Cliente **confirma interesse** no preço → Sistema adiciona ao pedido coletivo → Monitora progresso do **mínimo do fornecedor** → Quando mínimo é atingido, **congela novas adições** → Notifica todos os clientes do grupo
+
+**Etapa 4: Pagamento dos Clientes**
+Sistema abre **janela de pagamento** (48h) → Envia links personalizados via WhatsApp → Cliente realiza pagamento → Sistema confirma pagamento automaticamente → Atualiza status individual
+
+**Etapa 5: Compra do Fornecedor**
+Administrador **consolida pedido** → Faz pagamento ao fornecedor com **capital próprio** → Envia pedido via WhatsApp/site do fornecedor → Registra **valor antecipado** no sistema → Aguarda confirmação do fornecedor
+
+**Etapa 6: Acompanhamento e Entrega**
+Fornecedor confirma pedido e prazo → Sistema atualiza status para clientes → Produtos chegam → Conferência e separação → Notificação de disponibilidade → Clientes retiram/recebem → Sistema baixa estoque e **fecha fluxo financeiro**
+
+### **Fluxo 2: Gestão de Inadimplência em Escala**
+
+**Detecção Automática**:
+Sistema monitora **1400 clientes** simultaneamente → Identifica atrasos via **job automático** → Classifica por **gravidade** (1-3 dias, 4-7 dias, +7 dias) → Gera **lista priorizada** para cobrança
+
+**Cobrança Escalonada**:
+**Dia 1**: WhatsApp automático com link de pagamento
+**Dia 3**: Email + WhatsApp com **desconto de 5%** se pagar em 24h
+**Dia 7**: Ligação telefônica + **bloqueio temporário** da conta
+**Dia 15**: **Remoção do pedido coletivo** + processo de reembolso/crédito
+
+**Recuperação de Crédito**:
+Cliente inadimplente pode **negociar parcelamento** → Sistema gera **plano de pagamento** → Libera conta gradualmente conforme pagamentos → Mantém **histórico de comportamento** para futuras análises
+
+### **Fluxo 3: Gestão de Estoque Complexo**
+
+**Recebimento de Produtos**:
+Fornecedor entrega → **Conferência física** item por item → Sistema gera **checklist** baseado no pedido → Administrador confirma **qualidade e quantidade** → Produtos são **etiquetados** com código do cliente → Separação física por **área de retirada**
+
+**Controle de Variações**:
+Sistema mantém **estoque virtual** (pedidos confirmados) vs **estoque real** (produtos físicos) → **Alertas automáticos** para divergências → **Relatório de perdas** para produtos danificados → **Sistema de substituição** para produtos indisponíveis
+
+---
+
+## 📊 **ARQUITETURA DE DADOS PARA ALTA ESCALA**
+
+### **Entidades Principais Otimizadas**
+
+#### **Users (1400+ registros ativos)**
+```
+- id, name, email, phone, whatsapp
+- user_type (CLIENT, ADMIN, SUPER_ADMIN)
+- status (ACTIVE, BLOCKED, INACTIVE)
+- credit_balance (decimal)
+- registration_date, last_access
+- delivery_preference (NATAL_PICKUP, FORTALEZA_DELIVERY)
+- payment_history_summary (JSON)
+```
+
+#### **Suppliers (50-100 fornecedores estimados)**
+```
+- id, name, contact_name, whatsapp, website
+- minimum_order_value (decimal)
+- delivery_time_days (integer)
+- admin_fee_percentage (decimal)
+- categories (JSON array)
+- performance_rating (1-5)
+- status, notes
+```
+
+#### **CustomOrders (Pedidos Personalizados)**
+```
+- id, client_id, supplier_id (nullable)
+- product_image_url, reference_code
+- description, preferred_color, size
+- category, observations
+- estimated_price, final_price
+- status (PENDING_ANALYSIS, PRICED, CONFIRMED, IN_COLLECTIVE)
+- created_at, analyzed_at
+```
+
+#### **CollectiveOrders (Pedidos Coletivos por Fornecedor)**
+```
+- id, supplier_id, status
+- minimum_value, current_value
+- payment_deadline, supplier_payment_date
+- anticipated_amount (valor que a empresa pagou)
+- total_received (valor recebido dos clientes)
+- profit_margin, created_at
+```
+
+#### **OrderItems (Itens Individuais dos Clientes)**
+```
+- id, collective_order_id, client_id, custom_order_id
+- quantity, unit_price, total_price
+- payment_status, payment_date
+- delivery_preference, tracking_code
+- status (PENDING_PAYMENT, PAID, DELIVERED, RETURNED)
+```
+
+#### **CreditTransactions (Movimentação de Créditos)**
+```
+- id, client_id, transaction_type
+- amount, description, reference_order_id
+- created_at, expires_at
+- status (ACTIVE, USED, EXPIRED)
+```
+
+#### **SystemAudit (Auditoria para Múltiplos Admins)**
+```
+- id, admin_id, action_type, entity_type
+- entity_id, old_values (JSON), new_values (JSON)
+- timestamp, ip_address
+```
+
+---
+
+## 🎯 **ROADMAP DE DESENVOLVIMENTO REVISADO**
+
+### **FASE 1: INFRAESTRUTURA E AUTENTICAÇÃO (4 semanas)**
+
+**Semana 1: Setup Avançado**
+- Configurar **Spring Boot 3.x** com **PostgreSQL**
+- Implementar **Redis** para cache de sessões
+- Configurar **RabbitMQ** para filas de processamento
+- Setup de GOOGLE DRIVE API PARA UPLOAD E ARMAZENAMENTO DE CATÁLOGOS (PDFS) E IMAGENS
+- Configurar **monitoramento** com Actuator
+
+**Semana 2: Sistema de Autenticação Robusto**
+- JWT com **refresh tokens**
+- **Múltiplas sessões** simultâneas para admins
+- **Rate limiting** para APIs públicas
+- Sistema de **permissões granulares**
+- **Auditoria completa** de ações
+
+**Semana 3: Gestão de Usuários em Escala**
+- CRUD otimizado para **1400+ clientes**
+- **Busca avançada** com filtros múltiplos
+- **Paginação eficiente** com cursor-based pagination
+- **Dashboard de usuários** com métricas em tempo real
+- Sistema de **bloqueio/desbloqueio** em lote
+
+**Semana 4: Sistema de Upload e Storage**
+- **Upload múltiplo** de imagens com preview
+- **Compressão automática** de imagens
+- **CDN** para entrega rápida de imagens
+- **Validação de formato** e tamanho
+- **Backup automático** de arquivos
+
+### **FASE 2: CORE BUSINESS - PEDIDOS PERSONALIZADOS (5 semanas)**
+
+**Semana 5: Interface de Pedidos Personalizados**
+- **Formulário intuitivo** com validação em tempo real
+- **Drag-and-drop** para upload de imagens
+- **Autocomplete** para referências de produtos
+- **Tabela de medidas** interativa
+- **Preview** do pedido antes de enviar
+
+**Semana 6: Sistema de Análise Administrativa**
+- **Fila de pedidos** para análise
+- **Interface de precificação** rápida
+- **Pesquisa automática** em sites de fornecedores
+- **Calculadora de margem** em tempo real
+- **Sistema de aprovação** em lote
+
+**Semana 7: Gestão de Fornecedores Avançada**
+- **CRUD completo** com performance tracking
+- **Sistema de comunicação** integrado
+- **Templates** personalizáveis para WhatsApp
+- **Controle de mínimos** por fornecedor
+- **Histórico de pedidos** e performance
+
+**Semana 8: Pedidos Coletivos Inteligentes**
+- **Agrupamento automático** por fornecedor
+- **Cálculo dinâmico** de mínimos
+- **Sistema de notificações** em massa
+- **Controle de prazos** automatizado
+- **Dashboard** de acompanhamento
+
+**Semana 9: Sistema de Variações Complexo**
+- **Matriz de variações** (cor x tamanho x modelo)
+- **Controle de estoque** por variação
+- **Sistema de substituição** automática
+- **Relatórios de disponibilidade**
+- **Alertas de estoque baixo**
+
+### **FASE 3: SISTEMA FINANCEIRO ROBUSTO (4 semanas)**
+
+**Semana 10: Gateway de Pagamentos**
+- Integração com **Mercado Pago** e **PagSeguro**
+- **Webhook** para confirmação automática
+- **Retry automático** para pagamentos falhos
+- **Dashboard financeiro** em tempo real
+- **Conciliação automática**
+
+**Semana 11: Sistema de Créditos e Wallet**
+- **Wallet interno** para cada cliente
+- **Múltiplos tipos** de crédito
+- **Sistema de validade** configurável
+- **Transferência** entre clientes
+- **Relatórios de utilização**
+
+**Semana 12: Controle de Fluxo de Caixa**
+- **Dashboard de antecipações** pagas
+- **Controle de recebimentos** de clientes
+- **Cálculo automático** de margem real
+- **Projeções financeiras**
+- **Alertas de fluxo de caixa**
+
+**Semana 13: Sistema de Cobrança Automatizada**
+- **Cobrança escalonada** automática
+- **Templates personalizáveis** de cobrança
+- **Integração com WhatsApp** para lembretes
+- **Negociação de parcelamento**
+- **Relatórios de inadimplência**
+
+### **FASE 4: LOGÍSTICA E OPERAÇÕES (3 semanas)**
+
+**Semana 14: Sistema Multi-Localização**
+- **Cálculo de frete** para Fortaleza
+- **Integração com Correios**
+- **Rastreamento automático**
+- **Agendamento de retiradas**
+- **Controle de horários**
+
+**Semana 15: Gestão de Estoque Físico**
+- **Código de barras** para produtos
+- **Sistema de separação** por cliente
+- **Controle de qualidade** no recebimento
+- **Alertas de divergência**
+- **Relatórios de perdas**
+
+**Semana 16: Sistema de Devoluções**
+- **Fluxo automatizado** de devolução
+- **Análise baseada em regras**
+- **Processo de reembolso** integrado
+- **Controle de qualidade** de devoluções
+- **Métricas de satisfação**
+
+### **FASE 5: OTIMIZAÇÃO E ANALYTICS (3 semanas)**
+
+**Semana 17: Performance e Escalabilidade**
+- **Otimização de queries** para 1400+ usuários
+- **Cache inteligente** com Redis
+- **Processamento assíncrono** com RabbitMQ
+- **Monitoramento de performance**
+- **Auto-scaling** de recursos
+
+**Semana 18: Dashboards Executivos**
+- **Métricas em tempo real**
+- **Relatórios automatizados**
+- **Análise de tendências**
+- **Projeções de crescimento**
+- **KPIs operacionais**
+
+**Semana 19: Sistema de Notificações Avançado**
+- **Notificações push** via PWA
+- **Personalização** por cliente
+- **Horários inteligentes** de envio
+- **Templates dinâmicos**
+- **Métricas de engajamento**
+
+---
+
+## 🔧 **CONFIGURAÇÕES ESPECÍFICAS DO SISTEMA**
+
+### **Parâmetros Operacionais da Nosso Closet**
+
+**Regras de Pedido Coletivo**:
+- **Janela de pagamento**: 48 horas (configurável)
+- **Percentual mínimo** para confirmação: 80% dos clientes
+- **Tempo máximo** de análise de pedidos: 24 horas
+- **Limite de pedidos** por cliente por fornecedor: 10 itens
+
+**Regras Financeiras**:
+- **Taxa administrativa padrão**: 15-25% (configurável por fornecedor)
+- **Bônus de crédito**: 5% para quem aceita crédito em vez de reembolso
+- **Desconto por pontualidade**: 5% se pagar em 24h após cobrança
+- **Taxa de frete Fortaleza**: R$ 15,00 fixo (configurável)
+
+**Regras de Comunicação**:
+- **Horário de WhatsApp**: 8h às 20h (dias úteis), 9h às 18h (fins de semana)
+- **Frequência de cobrança**: Dias 1, 3, 7, 15
+- **Limite de mensagens**: 3 por dia por cliente
+- **Template personalizado** por tipo de fornecedor
+
+**Regras de Qualidade**:
+- **Prazo máximo** para conferência: 48h após chegada
+- **Tolerância de divergência**: 5% em valor
+- **Tempo de armazenamento**: 30 dias após notificação
+- **Critérios de devolução**: Defeito, tamanho errado, produto diferente
+
+---
+
+## 📈 **MÉTRICAS E KPIs ESSENCIAIS**
+
+### **Operacionais**
+- **Taxa de conversão** pedido personalizado → compra efetiva
+- **Tempo médio** de análise de pedidos
+- **Percentual de atingimento** de mínimos por fornecedor
+- **Taxa de inadimplência** por período
+- **Satisfação do cliente** (NPS)
+
+### **Financeiros**
+- **Margem real** por pedido coletivo
+- **Tempo de retorno** do capital antecipado
+- **Volume de créditos** não utilizados
+- **Taxa de reembolso** vs crédito
+- **Fluxo de caixa** projetado vs real
+
+### **Logísticos**
+- **Tempo médio** de entrega por fornecedor
+- **Taxa de divergência** no recebimento
+- **Percentual de devoluções** por motivo
+- **Eficiência de separação** de produtos
+- **Taxa de retirada** vs envio
+
+Este planejamento refinado considera a **realidade operacional** da Nosso Closet, com foco na **escalabilidade** para 1400+ clientes ativos e na **flexibilidade** necessária para um modelo de negócio baseado em antecipação de capital e personalização de pedidos.

@@ -1,15 +1,13 @@
-package com.nossocloset.repository;
+package com.zosh.repository;
 
-import com.nossocloset.model.Cart;
-import com.nossocloset.model.Product;
+import com.zosh.model.Cart;
+import com.zosh.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.nossocloset.model.CartItem;
+import com.zosh.model.CartItem;
 
 public interface CartItemRepository extends JpaRepository<CartItem, Long> {
 
-
     CartItem findByCartAndProductAndSize(Cart cart, Product product, String size);
-
 
 }

@@ -1,5 +1,4 @@
-package com.nossocloset.ai.services;
-
+package com.zosh.ai.services;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,7 +17,6 @@ public class AiProductServiceImpl implements AiProductService {
 
     @Value("${gemini.api.key}")
     private static String API_KEY;
-
 
     @Override
     public String simpleChat(String prompt) {

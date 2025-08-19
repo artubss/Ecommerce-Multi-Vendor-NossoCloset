@@ -1,14 +1,15 @@
-package com.nossocloset.response;
+package com.zosh.response;
 
-import com.nossocloset.dto.OrderHistory;
-import com.nossocloset.model.Cart;
-import com.nossocloset.model.Product;
+import com.zosh.dto.OrderHistory;
+import com.zosh.model.Cart;
+import com.zosh.model.Product;
 import lombok.*;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class FunctionResponse {
+
     private String functionName;
     private Cart userCart;
     private OrderHistory orderHistory;

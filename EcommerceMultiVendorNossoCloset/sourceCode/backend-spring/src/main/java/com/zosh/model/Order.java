@@ -1,10 +1,8 @@
-package com.nossocloset.model;
+package com.zosh.model;
 
+import com.zosh.domain.OrderStatus;
 
-
-import com.nossocloset.domain.OrderStatus;
-
-import com.nossocloset.domain.PaymentStatus;
+import com.zosh.domain.PaymentStatus;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
@@ -35,7 +33,7 @@ public class Order {
     private Long id;
 
     private String orderId;
-  
+
     @ManyToOne
     private User user;
 
@@ -48,19 +46,21 @@ public class Order {
     private Address shippingAddress;
 
     @Embedded
-    private PaymentDetails paymentDetails=new PaymentDetails();
+    private PaymentDetails paymentDetails = new PaymentDetails();
 
     private double totalMrpPrice;
-    
+
     private Integer totalSellingPrice;
-    
+
     private Integer discount;
 
+    @Column(columnDefinition = "SMALLINT")
     private OrderStatus orderStatus;
-    
+
     private int totalItem;
 
-    private PaymentStatus paymentStatus=PaymentStatus.PENDING;
+    @Column(columnDefinition = "SMALLINT")
+    private PaymentStatus paymentStatus = PaymentStatus.PENDING;
 
     private LocalDateTime orderDate = LocalDateTime.now();
     private LocalDateTime deliverDate = orderDate.plusDays(7);

@@ -1,13 +1,14 @@
-package com.nossocloset.repository;
+package com.zosh.repository;
 
-import com.nossocloset.domain.AccountStatus;
-import com.nossocloset.model.Seller;
+import com.zosh.domain.AccountStatus;
+import com.zosh.model.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface SellerRepository extends JpaRepository<Seller,Long> {
+public interface SellerRepository extends JpaRepository<Seller, Long> {
 
     Seller findByEmail(String email);
+
     List<Seller> findByAccountStatus(AccountStatus status);
 }

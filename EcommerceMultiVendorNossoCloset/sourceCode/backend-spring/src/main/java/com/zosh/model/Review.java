@@ -1,5 +1,4 @@
-package com.nossocloset.model;
-
+package com.zosh.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -16,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Table(name = "app_reviews") // Renomeando para evitar conflitos
 public class Review {
 
     @Id
@@ -41,6 +41,6 @@ public class Review {
     private User user;
 
     @Column(nullable = false)
-    private LocalDateTime createdAt=LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
 }

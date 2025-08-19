@@ -1,11 +1,11 @@
-package com.nossocloset.controller;
+package com.zosh.controller;
 
-import com.nossocloset.model.Cart;
-import com.nossocloset.model.Coupon;
-import com.nossocloset.model.User;
-import com.nossocloset.service.CartService;
-import com.nossocloset.service.CouponService;
-import com.nossocloset.service.UserService;
+import com.zosh.model.Cart;
+import com.zosh.model.Coupon;
+import com.zosh.model.User;
+import com.zosh.service.CartService;
+import com.zosh.service.CouponService;
+import com.zosh.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,23 +29,20 @@ public class AdminCouponController {
             @RequestHeader("Authorization"
             ) String jwt
     ) throws Exception {
-        User user=userService.findUserProfileByJwt(jwt);
+        User user = userService.findUserProfileByJwt(jwt);
         Cart cart;
 
-        if(apply.equals("true")){
-            cart = couponService.applyCoupon(code,orderValue,user);
-        }
-        else {
-            cart = couponService.removeCoupon(code,user);
+        if (apply.equals("true")) {
+            cart = couponService.applyCoupon(code, orderValue, user);
+        } else {
+            cart = couponService.removeCoupon(code, user);
         }
 
         return ResponseEntity.ok(cart);
 
     }
 
-
     // Admin operations
-
     @PostMapping("/admin/create")
     public ResponseEntity<Coupon> createCoupon(@RequestBody Coupon coupon) {
         Coupon createdCoupon = couponService.createCoupon(coupon);

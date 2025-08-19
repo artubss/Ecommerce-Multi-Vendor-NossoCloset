@@ -1,6 +1,6 @@
-package com.nossocloset.repository;
+package com.zosh.repository;
 
-import com.nossocloset.model.Transaction;
+import com.zosh.model.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
